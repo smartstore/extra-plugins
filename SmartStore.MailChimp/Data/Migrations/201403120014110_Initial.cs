@@ -8,8 +8,8 @@ namespace SmartStore.MailChimp.Data.Migrations
     {
         public override void Up()
         {
-			if (DbMigrationContext.Current.SuppressInitialCreate<MailChimpObjectContext>())
-				return;
+			//if (DbMigrationContext.Current.SuppressInitialCreate<MailChimpObjectContext>())
+			//	return;
 			
 			CreateTable(
                 "dbo.MailChimpEventQueueRecord",
