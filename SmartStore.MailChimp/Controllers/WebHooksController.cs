@@ -43,7 +43,7 @@ namespace SmartStore.MailChimp.Controllers
 				if (email.IsEmail())
 				{
                     // TODO: multistore capable.
-                    var subscriptions = _newsLetterSubscriptionService.GetAllNewsLetterSubscribers(email, 0, int.MaxValue, true);
+                    var subscriptions = _newsLetterSubscriptionService.GetAllNewsLetterSubscriptions(email, 0, int.MaxValue, true);
 
                     foreach (var subscription in subscriptions)
 					{
