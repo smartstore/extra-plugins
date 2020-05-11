@@ -2,11 +2,9 @@
 using System.Web;
 using System.Web.Mvc;
 using SmartStore.Services.Messages;
-using SmartStore.Web.Framework.Controllers;
 
 namespace SmartStore.MailChimp.Controllers
 {
-
     public class WebHooksController : Controller
     {
         private readonly MailChimpSettings _settings;
@@ -17,7 +15,10 @@ namespace SmartStore.MailChimp.Controllers
 		private const string TYPE_KEY_NAME = "type";
 		private const string TYPE_VALUE = "unsubscribe";
 
-        public WebHooksController(MailChimpSettings settings, HttpContextBase httpContext, INewsLetterSubscriptionService newsLetterSubscriptionService)
+        public WebHooksController(
+            MailChimpSettings settings,
+            HttpContextBase httpContext,
+            INewsLetterSubscriptionService newsLetterSubscriptionService)
         {
             _settings = settings;
             _httpContext = httpContext;
@@ -26,27 +27,34 @@ namespace SmartStore.MailChimp.Controllers
 
         public ActionResult Index(string webHookKey)
         {
-            if (String.IsNullOrWhiteSpace(_settings.WebHookKey))
+            if (string.IsNullOrWhiteSpace(_settings.WebHookKey))
+            {
                 return Content("Invalid Request.");
+            }
+
             if (!string.Equals(_settings.WebHookKey, webHookKey, StringComparison.InvariantCultureIgnoreCase))
+            {
                 return Content("Invalid Request.");
+            }
 
             if (IsUnsubscribe())
             {
 				var email = FindEmail();
 				if (email.IsEmail())
 				{
-					// TODO: multistore capable
-					var subscriptions = _newsLetterSubscriptionService.GetAllNewsLetterSubscriptions(email, 0, int.MaxValue, true);
+                    // TODO: multistore capable.
+                    var subscriptions = _newsLetterSubscriptionService.GetAllNewsLetterSubscribers(email, 0, int.MaxValue, true);
 
-					foreach (var subscription in subscriptions)
+                    foreach (var subscription in subscriptions)
 					{
 						// Do not publish unsubscribe event. Or duplicate events will occur.
-						_newsLetterSubscriptionService.DeleteNewsLetterSubscription(subscription, false);
+						_newsLetterSubscriptionService.DeleteNewsLetterSubscription(subscription.Subscription, false);
 					}
 
-					if (subscriptions.Count > 0)
-						return Content("OK");
+                    if (subscriptions.Count > 0)
+                    {
+                        return Content("OK");
+                    }
 				}
             }
 
