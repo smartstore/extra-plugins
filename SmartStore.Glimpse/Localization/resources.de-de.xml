@@ -6,7 +6,7 @@
     <Value>
       <![CDATA[
         <p>
-        Aktiviert die <a href="http://getglimpse.com/" target="_glimpse">Glimpse</a> Konsole für SmartStore.NET Requests. <a href="{0}" target="_glimpse">Zur Glimpse Client-Konfiguration</a>.
+        Aktiviert die <a href="http://getglimpse.com/" target="_glimpse">Glimpse</a> Konsole für Smartstore Requests. <a href="{0}" target="_glimpse">Zur Glimpse Client-Konfiguration</a>.
         </p>
       ]]>
     </Value>
