@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using SmartStore.Core.Domain.Customers;
+using SmartStore.Core.Security;
 using SmartStore.Services;
 using SmartStore.Services.Authentication.External;
-using SmartStore.Services.Security;
 using SmartStore.TwitterAuth.Models;
 using SmartStore.Web.Framework;
 using SmartStore.Web.Framework.Controllers;
@@ -26,13 +26,9 @@ namespace SmartStore.TwitterAuth.Controllers
 		}
         
         [AdminAuthorize, ChildActionOnly, LoadSetting]
+        [Permission(Permissions.Configuration.Authentication.Read)]
         public ActionResult Configure(TwitterExternalAuthSettings settings)
         {
-            if (!Services.Permissions.Authorize(StandardPermissionProvider.ManageExternalAuthenticationMethods))
-            {
-                return AccessDeniedPartialView();
-            }
-
             var model = new ConfigurationModel();
             model.ConsumerKey = settings.ConsumerKey;
             model.ConsumerSecret = settings.ConsumerSecret;
@@ -56,13 +52,9 @@ namespace SmartStore.TwitterAuth.Controllers
         }
 
         [HttpPost, AdminAuthorize, ChildActionOnly, SaveSetting]
-		public ActionResult Configure(ConfigurationModel model, TwitterExternalAuthSettings settings)
+        [Permission(Permissions.Configuration.Authentication.Update)]
+        public ActionResult Configure(ConfigurationModel model, TwitterExternalAuthSettings settings)
         {
-            if (!Services.Permissions.Authorize(StandardPermissionProvider.ManageExternalAuthenticationMethods))
-            {
-                return Configure(settings);
-            }
-
             if (!ModelState.IsValid)
             {
                 return Configure(settings);
@@ -121,10 +113,14 @@ namespace SmartStore.TwitterAuth.Controllers
                     return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.Standard, returnUrl });
                 default:
                     if (result.Result != null)
+                    {
                         return result.Result;
+                    }
 
                     if (HttpContext.Request.IsAuthenticated)
+                    {
                         return RedirectToReferrer(returnUrl, "~/");
+                    }
 
                     return new RedirectResult(Url.LogOn(returnUrl));
             }

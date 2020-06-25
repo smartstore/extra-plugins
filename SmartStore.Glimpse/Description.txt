@@ -1,8 +1,8 @@
 ﻿FriendlyName: Glimpse Web Debugger
 SystemName: SmartStore.Glimpse
 Group: Developer
-Version: 3.2.2
-MinAppVersion: 3.2.2
+Version: 4.0.0
+MinAppVersion: 4.0.0
 Author: SmartStore AG
 DisplayOrder: 1
 FileName: SmartStore.Glimpse.dll

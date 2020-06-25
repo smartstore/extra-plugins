@@ -5,7 +5,6 @@ This repository contains additional plugins and providers, which are not part of
 * __Australia Post__ shipping provider
 * __Authorize.Net__ payment provider
 * __Canada Post__ shipping provider
-* __PurchasedProducts__ discount rule provider
 * __FedEx__ shipping provider
 * __Glimpse__ developer console
 * __Live Person Chat__ widget

@@ -696,7 +696,7 @@ namespace SmartStore.Fedex
 
             //The solution coded here might be considered a bit of a hack
             //it only supports the scenario for US / Canada shipping
-            //because SmartStore.NET does not have a concept of a designated currency for a Country.
+            //because Smartstore does not have a concept of a designated currency for a Country.
             string originCurrencyCode;
             if (originCountryCode == "US")
                 originCurrencyCode = "USD";
