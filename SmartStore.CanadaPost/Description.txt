@@ -1,7 +1,7 @@
 ﻿FriendlyName: Canada Post
 SystemName: SmartStore.CanadaPost
 Group: Shipping
-Version: 4.0.0
-MinAppVersion: 4.0.0
+Version: 4.0.1
+MinAppVersion: 4.0.1
 DisplayOrder: 1
 FileName: SmartStore.CanadaPost.dll
