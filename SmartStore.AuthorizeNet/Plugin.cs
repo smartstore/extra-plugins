@@ -17,17 +17,17 @@ using SmartStore.Services.Payments;
 
 namespace SmartStore.AuthorizeNet
 {
-	/// <summary>
-	/// AuthorizeNet payment processor
-	/// </summary>
-	[DisplayOrder(77)]
-	public class Plugin : PaymentPluginBase, IConfigurable
+    /// <summary>
+    /// AuthorizeNet payment processor
+    /// </summary>
+    [DisplayOrder(77)]
+    public class Plugin : PaymentPluginBase, IConfigurable
     {
         #region Fields
 
         private readonly AuthorizeNetSettings _authorizeNetPaymentSettings;
         private readonly ICustomerService _customerService;
-		private readonly ICommonServices _services;
+        private readonly ICommonServices _services;
 
         #endregion
 
@@ -35,11 +35,11 @@ namespace SmartStore.AuthorizeNet
 
         public Plugin(AuthorizeNetSettings authorizeNetPaymentSettings,
             ICustomerService customerService,
-			ICommonServices services)
+            ICommonServices services)
         {
             _authorizeNetPaymentSettings = authorizeNetPaymentSettings;
             _customerService = customerService;
-			_services = services;
+            _services = services;
         }
 
         #endregion
@@ -101,7 +101,7 @@ namespace SmartStore.AuthorizeNet
             var result = new ProcessPaymentResult();
 
             var customer = _customerService.GetCustomerById(processPaymentRequest.CustomerId);
-			var store = _services.StoreService.GetStoreById(processPaymentRequest.StoreId);
+            var store = _services.StoreService.GetStoreById(processPaymentRequest.StoreId);
 
             var webClient = new WebClient();
             var form = new NameValueCollection();
@@ -204,14 +204,14 @@ namespace SmartStore.AuthorizeNet
         /// <returns>Capture payment result</returns>
         public override CapturePaymentResult Capture(CapturePaymentRequest capturePaymentRequest)
         {
-			var result = new CapturePaymentResult
-			{
-				NewPaymentStatus = capturePaymentRequest.Order.PaymentStatus
-			};
+            var result = new CapturePaymentResult
+            {
+                NewPaymentStatus = capturePaymentRequest.Order.PaymentStatus
+            };
 
             var webClient = new WebClient();
             var form = new NameValueCollection();
-			var store = _services.StoreService.GetStoreById(capturePaymentRequest.Order.StoreId);
+            var store = _services.StoreService.GetStoreById(capturePaymentRequest.Order.StoreId);
 
             form.Add("x_login", _authorizeNetPaymentSettings.LoginId);
             form.Add("x_tran_key", _authorizeNetPaymentSettings.TransactionKey);
@@ -400,13 +400,7 @@ namespace SmartStore.AuthorizeNet
             return result;
         }
 
-		public override RecurringPaymentType RecurringPaymentType
-		{
-			get
-			{
-				return RecurringPaymentType.Manual;
-			}
-		}
+        public override RecurringPaymentType RecurringPaymentType => RecurringPaymentType.Manual;
 
         /// <summary>
         /// Cancels a recurring payment
@@ -483,10 +477,10 @@ namespace SmartStore.AuthorizeNet
                 TransactionKey = "123",
                 LoginId = "456"
             };
-			_services.Settings.SaveSetting(settings);
+            _services.Settings.SaveSetting(settings);
 
-			_services.Localization.ImportPluginResourcesFromXml(this.PluginDescriptor);
-            
+            _services.Localization.ImportPluginResourcesFromXml(this.PluginDescriptor);
+
             base.Install();
         }
 
@@ -495,7 +489,7 @@ namespace SmartStore.AuthorizeNet
             //settings
             _services.Settings.DeleteSetting<AuthorizeNetSettings>();
 
-			_services.Localization.ImportPluginResourcesFromXml(this.PluginDescriptor);
+            _services.Localization.ImportPluginResourcesFromXml(this.PluginDescriptor);
 
             base.Uninstall();
         }
@@ -508,13 +502,7 @@ namespace SmartStore.AuthorizeNet
         /// <summary>
         /// Gets a payment method type
         /// </summary>
-        public override PaymentMethodType PaymentMethodType
-        {
-            get
-            {
-                return PaymentMethodType.Standard;
-            }
-        }
+        public override PaymentMethodType PaymentMethodType => PaymentMethodType.Standard;
 
         #endregion
     }

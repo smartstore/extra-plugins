@@ -21,10 +21,10 @@ using SmartStore.Services.Shipping.Tracking;
 
 namespace SmartStore.CanadaPost
 {
-	/// <summary>
-	/// Canada post computation method
-	/// </summary>
-	public class CanadaPostComputationMethod : BasePlugin, IShippingRateComputationMethod, IConfigurable
+    /// <summary>
+    /// Canada post computation method
+    /// </summary>
+    public class CanadaPostComputationMethod : BasePlugin, IShippingRateComputationMethod, IConfigurable
     {
         #region Constants
 
@@ -54,21 +54,21 @@ namespace SmartStore.CanadaPost
             this._canadaPostSettings = canadaPostSettings;
             this._workContext = workContext;
 
-			T = NullLocalizer.Instance;
-		}
+            T = NullLocalizer.Instance;
+        }
 
-		public Localizer T { get; set; }
+        public Localizer T { get; set; }
 
-		#endregion
+        #endregion
 
-		#region Utilities
+        #region Utilities
 
-		/// <summary>
-		/// Sends the message to CanadaPost.
-		/// </summary>
-		/// <param name="eParcelMessage">The e parcel message.</param>
-		/// <returns></returns>
-		private string SendMessage(string eParcelMessage)
+        /// <summary>
+        /// Sends the message to CanadaPost.
+        /// </summary>
+        /// <param name="eParcelMessage">The e parcel message.</param>
+        /// <returns></returns>
+        private string SendMessage(string eParcelMessage)
         {
             using (Socket socCanadaPost = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
             {
@@ -294,50 +294,50 @@ namespace SmartStore.CanadaPost
             try
             {
                 var profile = new Profile();
-				profile.MerchantId = _canadaPostSettings.CustomerId;
+                profile.MerchantId = _canadaPostSettings.CustomerId;
 
-				var adr = getShippingOptionRequest.ShippingAddress;
+                var adr = getShippingOptionRequest.ShippingAddress;
 
-				if (adr != null && adr.Country != null && adr.StateProvince != null)
-				{
-					var destination = new Destination()
-					{
-						City = adr.City,
-						StateOrProvince = adr.StateProvince.Abbreviation,
-						Country = adr.Country.TwoLetterIsoCode,
-						PostalCode = adr.ZipPostalCode,
-					};
+                if (adr != null && adr.Country != null && adr.StateProvince != null)
+                {
+                    var destination = new Destination()
+                    {
+                        City = adr.City,
+                        StateOrProvince = adr.StateProvince.Abbreviation,
+                        Country = adr.Country.TwoLetterIsoCode,
+                        PostalCode = adr.ZipPostalCode,
+                    };
 
-					var items = CreateItems(getShippingOptionRequest);
+                    var items = CreateItems(getShippingOptionRequest);
 
-					var lang = CanadaPostLanguageEnum.English;
-					if (_workContext.WorkingLanguage.LanguageCulture.StartsWith("fr", StringComparison.InvariantCultureIgnoreCase))
-						lang = CanadaPostLanguageEnum.French;
+                    var lang = CanadaPostLanguageEnum.English;
+                    if (_workContext.WorkingLanguage.LanguageCulture.StartsWith("fr", StringComparison.InvariantCultureIgnoreCase))
+                        lang = CanadaPostLanguageEnum.French;
 
-					var requestResult = GetShippingOptionsInternal(profile, destination, items, lang);
-					if (requestResult.IsError)
-					{
-						response.AddError(requestResult.StatusMessage);
-					}
-					else
-					{
-						foreach (var dr in requestResult.AvailableRates)
-						{
-							var so = new ShippingOption();
-							so.Name = dr.Name;
-							if (!string.IsNullOrEmpty(dr.DeliveryDate))
-								so.Name += string.Format(" - {0}", dr.DeliveryDate);
-							so.Rate = dr.Amount;
-							response.ShippingOptions.Add(so);
-						}
-					}
+                    var requestResult = GetShippingOptionsInternal(profile, destination, items, lang);
+                    if (requestResult.IsError)
+                    {
+                        response.AddError(requestResult.StatusMessage);
+                    }
+                    else
+                    {
+                        foreach (var dr in requestResult.AvailableRates)
+                        {
+                            var so = new ShippingOption();
+                            so.Name = dr.Name;
+                            if (!string.IsNullOrEmpty(dr.DeliveryDate))
+                                so.Name += string.Format(" - {0}", dr.DeliveryDate);
+                            so.Rate = dr.Amount;
+                            response.ShippingOptions.Add(so);
+                        }
+                    }
 
-					foreach (var shippingOption in response.ShippingOptions)
-					{
-						if (!shippingOption.Name.StartsWith("canada post", StringComparison.InvariantCultureIgnoreCase))
-							shippingOption.Name = string.Format("Canada Post {0}", shippingOption.Name);
-					}
-				}
+                    foreach (var shippingOption in response.ShippingOptions)
+                    {
+                        if (!shippingOption.Name.StartsWith("canada post", StringComparison.InvariantCultureIgnoreCase))
+                            shippingOption.Name = string.Format("Canada Post {0}", shippingOption.Name);
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -368,9 +368,9 @@ namespace SmartStore.CanadaPost
         {
             actionName = "Configure";
             controllerName = "CanadaPost";
-			routeValues = new RouteValueDictionary() { { "area", "SmartStore.CanadaPost" } };
+            routeValues = new RouteValueDictionary() { { "area", "SmartStore.CanadaPost" } };
         }
-        
+
         /// <summary>
         /// Install plugin
         /// </summary>
@@ -382,7 +382,7 @@ namespace SmartStore.CanadaPost
                 Url = "sellonline.canadapost.ca",
                 Port = 30000,
                 //use "CPC_DEMO_XML" merchant ID for testing
-                CustomerId = "CPC_DEMO_XML" 
+                CustomerId = "CPC_DEMO_XML"
             };
             _settingService.SaveSetting(settings);
 
@@ -393,10 +393,10 @@ namespace SmartStore.CanadaPost
             this.AddOrUpdatePluginLocaleResource("Plugins.Shipping.CanadaPost.Fields.Port.Hint", "Specify Canada Post port.");
             this.AddOrUpdatePluginLocaleResource("Plugins.Shipping.CanadaPost.Fields.CustomerId", "Canada Post Customer ID");
             this.AddOrUpdatePluginLocaleResource("Plugins.Shipping.CanadaPost.Fields.CustomerId.Hint", "Specify Canada Post customer identifier.");
-            
+
             base.Install();
         }
-        
+
         /// <summary>
         /// Uninstall plugin
         /// </summary>
@@ -409,7 +409,7 @@ namespace SmartStore.CanadaPost
             this.DeletePluginLocaleResource("Plugins.Shipping.CanadaPost.Fields.Port.Hint");
             this.DeletePluginLocaleResource("Plugins.Shipping.CanadaPost.Fields.CustomerId");
             this.DeletePluginLocaleResource("Plugins.Shipping.CanadaPost.Fields.CustomerId.Hint");
-            
+
             base.Uninstall();
         }
 
@@ -420,26 +420,14 @@ namespace SmartStore.CanadaPost
         /// <summary>
         /// Gets a shipping rate computation method type
         /// </summary>
-        public ShippingRateComputationMethodType ShippingRateComputationMethodType
-        {
-            get
-            {
-                return ShippingRateComputationMethodType.Realtime;
-            }
-        }
-        
+        public ShippingRateComputationMethodType ShippingRateComputationMethodType => ShippingRateComputationMethodType.Realtime;
+
         /// <summary>
         /// Gets a shipment tracker
         /// </summary>
-        public IShipmentTracker ShipmentTracker
-        {
-            get { return null; }
-        }
+        public IShipmentTracker ShipmentTracker => null;
 
-		public bool IsActive
-		{
-			get { return true; }
-		}
+        public bool IsActive => true;
 
         #endregion
     }

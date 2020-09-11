@@ -7,7 +7,7 @@ using G = Glimpse;
 
 namespace SmartStore.Glimpse.Infrastructure
 {
-	public class GlimpseStarter : IPreApplicationStart, IApplicationStart
+    public class GlimpseStarter : IPreApplicationStart, IApplicationStart
     {
         // Ensure this runs before EF initializes
         int IApplicationStart.Order => -2000;

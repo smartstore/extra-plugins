@@ -23,8 +23,8 @@ namespace SmartStore.TwitterAuth.Controllers
         {
             _openAuthenticationService = openAuthenticationService;
             _externalAuthenticationSettings = externalAuthenticationSettings;
-		}
-        
+        }
+
         [AdminAuthorize, ChildActionOnly, LoadSetting]
         [Permission(Permissions.Configuration.Authentication.Read)]
         public ActionResult Configure(TwitterExternalAuthSettings settings)
@@ -38,7 +38,7 @@ namespace SmartStore.TwitterAuth.Controllers
             var storeLocation = Services.WebHelper.GetStoreLocation(false);
 
             model.CallbackUrls.Add(Services.WebHelper.GetStoreLocation(false) + "Plugins/SmartStore.TwitterAuth/LoginCallback/");
-            
+
             if (store.SslEnabled)
             {
                 model.CallbackUrls.Add(Services.WebHelper.GetStoreLocation(true) + "Plugins/SmartStore.TwitterAuth/LoginCallback/");
@@ -63,9 +63,9 @@ namespace SmartStore.TwitterAuth.Controllers
             settings.ConsumerKey = model.ConsumerKey.TrimSafe();
             settings.ConsumerSecret = model.ConsumerSecret.TrimSafe();
 
-			NotifySuccess(T("Admin.Common.DataSuccessfullySaved"));
+            NotifySuccess(T("Admin.Common.DataSuccessfullySaved"));
 
-			return RedirectToConfiguration(TwitterExternalAuthMethod.SystemName);
+            return RedirectToConfiguration(TwitterExternalAuthMethod.SystemName);
         }
 
         [ChildActionOnly]

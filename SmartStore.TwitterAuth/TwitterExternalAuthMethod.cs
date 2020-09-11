@@ -43,6 +43,6 @@ namespace SmartStore.TwitterAuth
             _localizationService.DeleteLocaleStringResources(PluginDescriptor.ResourceRootKey);
 
             base.Uninstall();
-        }        
+        }
     }
 }

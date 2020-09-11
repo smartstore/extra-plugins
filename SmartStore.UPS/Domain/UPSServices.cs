@@ -24,7 +24,7 @@ namespace SmartStore.UPS.Domain
                                         "UPS Next Day Air Early A.M.",
                                         "UPS Worldwide Express Plus",
                                         "UPS 2nd Day Air A.M.",
-                                        "UPS Saver", 
+                                        "UPS Saver",
                                         "UPS Today Standard",
                                         "UPS Today Dedicated Courrier",
                                         "UPS Today Express",
@@ -36,10 +36,7 @@ namespace SmartStore.UPS.Domain
         /// <summary>
         /// UPS services string names
         /// </summary>
-        public string[] Services
-        {
-            get { return _services; }
-        }
+        public string[] Services => _services;
 
         #endregion
 

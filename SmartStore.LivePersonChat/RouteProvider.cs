@@ -8,20 +8,14 @@ namespace SmartStore.LivePersonChat
     {
         public void RegisterRoutes(RouteCollection routes)
         {
-			routes.MapRoute("SmartStore.LivePersonChat",
-				 "Plugins/SmartStore.LivePersonChat/{action}",
+            routes.MapRoute("SmartStore.LivePersonChat",
+                 "Plugins/SmartStore.LivePersonChat/{action}",
                  new { controller = "WidgetsLivePersonChat", action = "Configure" },
                  new[] { "SmartStore.LivePersonChat.Controllers" }
             )
-			.DataTokens["area"] = "SmartStore.LivePersonChat";
+            .DataTokens["area"] = "SmartStore.LivePersonChat";
         }
 
-        public int Priority
-        {
-            get
-            {
-                return 0;
-            }
-        }
+        public int Priority => 0;
     }
 }

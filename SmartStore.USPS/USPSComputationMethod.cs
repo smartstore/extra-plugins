@@ -27,10 +27,10 @@ using SmartStore.USPS.Domain;
 
 namespace SmartStore.USPS
 {
-	/// <summary>
-	/// USPS computation method
-	/// </summary>
-	public class USPSComputationMethod : BasePlugin, IShippingRateComputationMethod, IConfigurable
+    /// <summary>
+    /// USPS computation method
+    /// </summary>
+    public class USPSComputationMethod : BasePlugin, IShippingRateComputationMethod, IConfigurable
     {
         #region Constants
 
@@ -49,7 +49,7 @@ namespace SmartStore.USPS
         private readonly MeasureSettings _measureSettings;
         private readonly IPriceCalculationService _priceCalculationService;
         private readonly ICommonServices _services;
-		private readonly ITaxService _taxService;
+        private readonly ITaxService _taxService;
 
         #endregion
 
@@ -59,7 +59,7 @@ namespace SmartStore.USPS
             IShippingService shippingService, ISettingService settingService,
             USPSSettings uspsSettings, MeasureSettings measureSettings,
             IPriceCalculationService priceCalculationService, ICommonServices services,
-			ITaxService taxService)
+            ITaxService taxService)
         {
             this._measureService = measureService;
             this._shippingService = shippingService;
@@ -68,23 +68,23 @@ namespace SmartStore.USPS
             this._measureSettings = measureSettings;
             this._priceCalculationService = priceCalculationService;
             this._services = services;
-			_taxService = taxService;
+            _taxService = taxService;
 
-			T = NullLocalizer.Instance;
-		}
+            T = NullLocalizer.Instance;
+        }
 
-		public Localizer T { get; set; }
+        public Localizer T { get; set; }
 
-		#endregion
+        #endregion
 
-		#region Utilities
+        #region Utilities
 
-		/// <summary>
-		/// Convert pounds to ounces
-		/// </summary>
-		/// <param name="pounds"></param>
-		/// <returns></returns>
-		protected int PoundsToOunces(int pounds)
+        /// <summary>
+        /// Convert pounds to ounces
+        /// </summary>
+        /// <param name="pounds"></param>
+        /// <returns></returns>
+        protected int PoundsToOunces(int pounds)
         {
             return Convert.ToInt32(pounds * 16M);
         }
@@ -116,7 +116,7 @@ namespace SmartStore.USPS
             var baseusedMeasureWeight = _measureService.GetMeasureWeightById(_measureSettings.BaseWeightId);
             if (baseusedMeasureWeight == null)
                 throw new SmartException("Primary weight can't be loaded");
-            
+
             var usedMeasureDimension = _measureService.GetMeasureDimensionBySystemKeyword(MEASUREDIMENSIONSYSTEMKEYWORD);
             if (usedMeasureDimension == null)
                 throw new SmartException(string.Format("USPS shipping service. Could not load \"{0}\" measure dimension", MEASUREDIMENSIONSYSTEMKEYWORD));
@@ -130,7 +130,7 @@ namespace SmartStore.USPS
             int height = Convert.ToInt32(Math.Ceiling(getShippingOptionRequest.GetTotalHeight() / baseusedMeasureDimension.Ratio * usedMeasureDimension.Ratio));
             int width = Convert.ToInt32(Math.Ceiling(getShippingOptionRequest.GetTotalWidth() / baseusedMeasureDimension.Ratio * usedMeasureDimension.Ratio));
             int weight = Convert.ToInt32(Math.Ceiling(_shippingService.GetShoppingCartTotalWeight(getShippingOptionRequest.Items) / baseusedMeasureWeight.Ratio * usedMeasureWeight.Ratio));
-            
+
             if (length < 1) length = 1;
             if (height < 1) height = 1;
             if (width < 1) width = 1;
@@ -145,30 +145,30 @@ namespace SmartStore.USPS
             int pounds = Convert.ToInt32(weight / 16);
             int ounces = Convert.ToInt32(weight - (pounds * 16.0M));
             int girth = height + height + width + width;
-			var taxRate = decimal.Zero;
-			//Get shopping cart sub-total.  V2 International rates require the package value to be declared.
-			decimal subTotal = decimal.Zero;
+            var taxRate = decimal.Zero;
+            //Get shopping cart sub-total.  V2 International rates require the package value to be declared.
+            decimal subTotal = decimal.Zero;
 
-			foreach (var shoppingCartItem in getShippingOptionRequest.Items)
+            foreach (var shoppingCartItem in getShippingOptionRequest.Items)
             {
-				if (shoppingCartItem.Item.IsFreeShipping || !shoppingCartItem.Item.IsShipEnabled)
-				{
-					continue;
-				}
+                if (shoppingCartItem.Item.IsFreeShipping || !shoppingCartItem.Item.IsShipEnabled)
+                {
+                    continue;
+                }
 
-				var itemSubTotal = _priceCalculationService.GetSubTotal(shoppingCartItem, true);
-				var itemSubTotalInclTax = _taxService.GetProductPrice(shoppingCartItem.Item.Product, itemSubTotal, true, getShippingOptionRequest.Customer, out taxRate);
-				subTotal += itemSubTotalInclTax;
-			}
+                var itemSubTotal = _priceCalculationService.GetSubTotal(shoppingCartItem, true);
+                var itemSubTotalInclTax = _taxService.GetProductPrice(shoppingCartItem.Item.Product, itemSubTotal, true, getShippingOptionRequest.Customer, out taxRate);
+                subTotal += itemSubTotalInclTax;
+            }
 
-			string requestString = string.Empty;
+            string requestString = string.Empty;
 
             bool isDomestic = IsDomesticRequest(getShippingOptionRequest);
             if (isDomestic)
             {
                 #region domestic request
-				zipPostalCodeFrom = zipPostalCodeFrom.Truncate(5).EnsureNumericOnly();
-				zipPostalCodeTo = zipPostalCodeTo.Truncate(5).EnsureNumericOnly();
+                zipPostalCodeFrom = zipPostalCodeFrom.Truncate(5).EnsureNumericOnly();
+                zipPostalCodeTo = zipPostalCodeTo.Truncate(5).EnsureNumericOnly();
 
                 var sb = new StringBuilder();
                 sb.AppendFormat("<RateV4Request USERID=\"{0}\" PASSWORD=\"{1}\">", username, password);
@@ -245,7 +245,7 @@ namespace SmartStore.USPS
                     if (length2 < 1) length2 = 1;
 
                     var packageSize = GetPackageSize(length2, height2, width2);
-                    
+
                     int girth2 = height2 + height2 + width2 + width2;
 
                     for (int i = 0; i < totalPackages; i++)
@@ -643,7 +643,7 @@ namespace SmartStore.USPS
             controllerName = "USPS";
             routeValues = new RouteValueDictionary() { { "area", "SmartStore.USPS" } };
         }
-        
+
         /// <summary>
         /// Install plugin
         /// </summary>
@@ -665,7 +665,7 @@ namespace SmartStore.USPS
 
             //locales
             _services.Localization.ImportPluginResourcesFromXml(this.PluginDescriptor);
-            
+
             base.Install();
         }
 
@@ -688,26 +688,14 @@ namespace SmartStore.USPS
         /// <summary>
         /// Gets a shipping rate computation method type
         /// </summary>
-        public ShippingRateComputationMethodType ShippingRateComputationMethodType
-        {
-            get
-            {
-                return ShippingRateComputationMethodType.Realtime;
-            }
-        }
-        
+        public ShippingRateComputationMethodType ShippingRateComputationMethodType => ShippingRateComputationMethodType.Realtime;
+
         /// <summary>
         /// Gets a shipment tracker
         /// </summary>
-        public IShipmentTracker ShipmentTracker
-        {
-            get { return null; }
-        }
+        public IShipmentTracker ShipmentTracker => null;
 
-		public bool IsActive
-		{
-			get { return true; }
-		}
+        public bool IsActive => true;
 
         #endregion
     }

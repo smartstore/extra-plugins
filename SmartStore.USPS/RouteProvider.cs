@@ -16,12 +16,6 @@ namespace SmartStore.USPS
             .DataTokens["area"] = "SmartStore.USPS";
         }
 
-        public int Priority
-        {
-            get
-            {
-                return 0;
-            }
-        }
+        public int Priority => 0;
     }
 }

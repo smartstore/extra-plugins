@@ -23,10 +23,10 @@ using SmartStore.Services.Shipping.Tracking;
 
 namespace SmartStore.Fedex
 {
-	/// <summary>
-	/// Fedex computation method
-	/// </summary>
-	public class FedexComputationMethod : BasePlugin, IShippingRateComputationMethod, IConfigurable
+    /// <summary>
+    /// Fedex computation method
+    /// </summary>
+    public class FedexComputationMethod : BasePlugin, IShippingRateComputationMethod, IConfigurable
     {
         #region Constants
 
@@ -44,19 +44,19 @@ namespace SmartStore.Fedex
         private readonly IOrderTotalCalculationService _orderTotalCalculationService;
         private readonly ICurrencyService _currencyService;
         private readonly ILogger _logger;
-		private readonly ICommonServices _services;
+        private readonly ICommonServices _services;
 
         #endregion
 
         #region Ctor
 
         public FedexComputationMethod(IMeasureService measureService,
-            IShippingService shippingService, 
+            IShippingService shippingService,
             FedexSettings fedexSettings,
-			IOrderTotalCalculationService orderTotalCalculationService,
+            IOrderTotalCalculationService orderTotalCalculationService,
             ICurrencyService currencyService,
             ILogger logger,
-			ICommonServices services)
+            ICommonServices services)
         {
             this._measureService = measureService;
             this._shippingService = shippingService;
@@ -64,18 +64,18 @@ namespace SmartStore.Fedex
             this._orderTotalCalculationService = orderTotalCalculationService;
             this._currencyService = currencyService;
             this._logger = logger;
-			this._services = services;
+            this._services = services;
 
-			T = NullLocalizer.Instance;
-		}
+            T = NullLocalizer.Instance;
+        }
 
-		public Localizer T { get; set; }
+        public Localizer T { get; set; }
 
-		#endregion
+        #endregion
 
-		#region Utilities
+        #region Utilities
 
-		private RateRequest CreateRateRequest(GetShippingOptionRequest getShippingOptionRequest, out Currency requestedShipmentCurrency)
+        private RateRequest CreateRateRequest(GetShippingOptionRequest getShippingOptionRequest, out Currency requestedShipmentCurrency)
         {
             // Build the RateRequest
             var request = new RateRequest();
@@ -122,7 +122,7 @@ namespace SmartStore.Fedex
                 request.RequestedShipment.Recipient.Address.CountryCode); // destination
 
             decimal subTotalShipmentCurrency;
-			var primaryStoreCurrency = _services.StoreContext.CurrentStore.PrimaryStoreCurrency;
+            var primaryStoreCurrency = _services.StoreContext.CurrentStore.PrimaryStoreCurrency;
 
             if (requestedShipmentCurrency.CurrencyCode == primaryStoreCurrency.CurrencyCode)
                 subTotalShipmentCurrency = subTotalBase;
@@ -263,7 +263,7 @@ namespace SmartStore.Fedex
 
         private bool IncludeStateProvinceCode(string countryCode)
         {
-            return (countryCode.Equals("US", StringComparison.InvariantCultureIgnoreCase) || 
+            return (countryCode.Equals("US", StringComparison.InvariantCultureIgnoreCase) ||
                     countryCode.Equals("CA", StringComparison.InvariantCultureIgnoreCase));
         }
 
@@ -611,7 +611,7 @@ namespace SmartStore.Fedex
         private Decimal ConvertChargeToPrimaryCurrency(RateServiceWebReference.Money charge, Currency requestedShipmentCurrency)
         {
             decimal amount;
-			var primaryStoreCurrency = _services.StoreContext.CurrentStore.PrimaryStoreCurrency;
+            var primaryStoreCurrency = _services.StoreContext.CurrentStore.PrimaryStoreCurrency;
 
             if (primaryStoreCurrency.CurrencyCode.Equals(charge.Currency, StringComparison.InvariantCultureIgnoreCase))
             {
@@ -689,10 +689,10 @@ namespace SmartStore.Fedex
         {
             return Convert.ToInt32(Math.Ceiling(_measureService.ConvertFromPrimaryMeasureWeight(quantity, usedMeasureWeighht)));
         }
-        
+
         private Currency GetRequestedShipmentCurrency(string originCountryCode, string destinCountryCode)
         {
-			var primaryStoreCurrency = _services.StoreContext.CurrentStore.PrimaryStoreCurrency;
+            var primaryStoreCurrency = _services.StoreContext.CurrentStore.PrimaryStoreCurrency;
 
             //The solution coded here might be considered a bit of a hack
             //it only supports the scenario for US / Canada shipping
@@ -712,7 +712,7 @@ namespace SmartStore.Fedex
                 destinCurrencyCode = "CAD";
             else
                 destinCurrencyCode = primaryStoreCurrency.CurrencyCode;
-            
+
             //when neither the shipping origin's currency or the destinations currency is the same as the store primary currency,
             //FedEx would complain that "There are no valid services available. (code: 556)".
             if (originCurrencyCode == primaryStoreCurrency.CurrencyCode || destinCurrencyCode == primaryStoreCurrency.CurrencyCode)
@@ -749,7 +749,7 @@ namespace SmartStore.Fedex
                 return response;
             }
 
-			if (getShippingOptionRequest.ShippingAddress == null || getShippingOptionRequest.ShippingAddress.Country == null)
+            if (getShippingOptionRequest.ShippingAddress == null || getShippingOptionRequest.ShippingAddress.Country == null)
             {
                 return response;
             }
@@ -764,8 +764,8 @@ namespace SmartStore.Fedex
                 // This is the call to the web service passing in a RateRequest and returning a RateReply
                 var reply = service.getRates(request); // Service call
 
-                if (reply.HighestSeverity == RateServiceWebReference.NotificationSeverityType.SUCCESS || 
-                    reply.HighestSeverity == RateServiceWebReference.NotificationSeverityType.NOTE || 
+                if (reply.HighestSeverity == RateServiceWebReference.NotificationSeverityType.SUCCESS ||
+                    reply.HighestSeverity == RateServiceWebReference.NotificationSeverityType.NOTE ||
                     reply.HighestSeverity == RateServiceWebReference.NotificationSeverityType.WARNING) // check if the call was successful
                 {
                     if (reply != null && reply.RateReplyDetails != null)
@@ -834,7 +834,7 @@ namespace SmartStore.Fedex
         {
             actionName = "Configure";
             controllerName = "Fedex";
-			routeValues = new RouteValueDictionary() { { "area", "SmartStore.FedEx" } };
+            routeValues = new RouteValueDictionary() { { "area", "SmartStore.FedEx" } };
         }
 
         /// <summary>
@@ -855,7 +855,7 @@ namespace SmartStore.Fedex
                 PackingPackageVolume = 5184
             };
             _services.Settings.SaveSetting(settings);
-            
+
             _services.Localization.ImportPluginResourcesFromXml(this.PluginDescriptor);
 
             base.Install();
@@ -866,7 +866,7 @@ namespace SmartStore.Fedex
         /// </summary>
         public override void Uninstall()
         {
-			_services.Localization.DeleteLocaleStringResources(this.PluginDescriptor.ResourceRootKey);
+            _services.Localization.DeleteLocaleStringResources(this.PluginDescriptor.ResourceRootKey);
 
             base.Uninstall();
         }
@@ -878,26 +878,14 @@ namespace SmartStore.Fedex
         /// <summary>
         /// Gets a shipping rate computation method type
         /// </summary>
-        public ShippingRateComputationMethodType ShippingRateComputationMethodType
-        {
-            get
-            {
-                return ShippingRateComputationMethodType.Realtime;
-            }
-        }
+        public ShippingRateComputationMethodType ShippingRateComputationMethodType => ShippingRateComputationMethodType.Realtime;
 
         /// <summary>
         /// Gets a shipment tracker
         /// </summary>
-        public IShipmentTracker ShipmentTracker
-        {
-            get { return new FedexShipmentTracker(_logger, _fedexSettings); }
-        }
+        public IShipmentTracker ShipmentTracker => new FedexShipmentTracker(_logger, _fedexSettings);
 
-		public bool IsActive
-		{
-			get { return true; }
-		}
+        public bool IsActive => true;
 
         #endregion
     }

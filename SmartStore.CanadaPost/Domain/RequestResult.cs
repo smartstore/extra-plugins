@@ -45,26 +45,14 @@ namespace SmartStore.CanadaPost.Domain
         /// </summary>
         /// <value>The available rates.</value>
         [DataMember]
-        public List<DeliveryRate> AvailableRates
-        {
-            get
-            {
-                return m_rates;
-            }
-        }
+        public List<DeliveryRate> AvailableRates => m_rates;
 
         /// <summary>
         /// Gets the boxes.
         /// </summary>
         /// <value>The boxes.</value>
         [DataMember]
-        public List<BoxDetail> Boxes
-        {
-            get
-            {
-                return m_boxes;
-            }
-        }
+        public List<BoxDetail> Boxes => m_boxes;
 
         /// <summary>
         /// Gets or sets the value indicating whether it's error

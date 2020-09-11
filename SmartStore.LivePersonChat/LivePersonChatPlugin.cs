@@ -14,13 +14,13 @@ namespace SmartStore.LivePersonChat
     {
         private readonly LivePersonChatSettings _livePersonChatSettings;
         private readonly ILocalizationService _localizationService;
-		private readonly ISettingService _settingService;
+        private readonly ISettingService _settingService;
 
-		public LivePersonChatPlugin(LivePersonChatSettings livePersonChatSettings, ILocalizationService localizationService, ISettingService settingService)
+        public LivePersonChatPlugin(LivePersonChatSettings livePersonChatSettings, ILocalizationService localizationService, ISettingService settingService)
         {
             _livePersonChatSettings = livePersonChatSettings;
             _localizationService = localizationService;
-			_settingService = settingService;
+            _settingService = settingService;
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace SmartStore.LivePersonChat
         {
             actionName = "Configure";
             controllerName = "WidgetsLivePersonChat";
-			routeValues = new RouteValueDictionary() { { "area", "SmartStore.LivePersonChat" } };
+            routeValues = new RouteValueDictionary() { { "area", "SmartStore.LivePersonChat" } };
         }
 
         /// <summary>
@@ -63,12 +63,12 @@ namespace SmartStore.LivePersonChat
                 {"widgetZone", widgetZone}
             };
         }
-        
+
         /// <summary>
         /// Install plugin
         /// </summary>
         public override void Install()
-        {            
+        {
             _localizationService.ImportPluginResourcesFromXml(this.PluginDescriptor);
 
             base.Install();
@@ -83,7 +83,7 @@ namespace SmartStore.LivePersonChat
             _localizationService.DeleteLocaleStringResources(this.PluginDescriptor.ResourceRootKey);
             _localizationService.DeleteLocaleStringResources("Plugins.FriendlyName.Widgets.LivePersonChat", false);
 
-			_settingService.DeleteSetting<LivePersonChatSettings>();
+            _settingService.DeleteSetting<LivePersonChatSettings>();
 
             base.Uninstall();
         }

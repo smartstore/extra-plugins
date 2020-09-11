@@ -6,22 +6,22 @@ using SmartStore.Services.Orders;
 
 namespace SmartStore.Verizon
 {
-	public class OrderPlacedEventConsumer : IConsumer
+    public class OrderPlacedEventConsumer : IConsumer
     {
         private readonly VerizonSettings _verizonSettings;
         private readonly IPluginFinder _pluginFinder;
         private readonly IOrderService _orderService;
-		private readonly ICommonServices _services;
+        private readonly ICommonServices _services;
 
-		public OrderPlacedEventConsumer(VerizonSettings verizonSettings,
+        public OrderPlacedEventConsumer(VerizonSettings verizonSettings,
             IPluginFinder pluginFinder,
-			IOrderService orderService,
-			ICommonServices services)
+            IOrderService orderService,
+            ICommonServices services)
         {
             _verizonSettings = verizonSettings;
             _pluginFinder = pluginFinder;
             _orderService = orderService;
-			_services = services;
+            _services = services;
         }
 
         /// <summary>
@@ -39,21 +39,21 @@ namespace SmartStore.Verizon
             if (pluginDescriptor == null)
                 return;
 
-			var store = _services.StoreContext.CurrentStore;
+            var store = _services.StoreContext.CurrentStore;
 
-			if (!(store.Id == 0 || _services.Settings.GetSettingByKey<string>(pluginDescriptor.GetSettingKey("LimitedToStores")).ToIntArrayContains(store.Id, true)))
-				return;
+            if (!(store.Id == 0 || _services.Settings.GetSettingByKey<string>(pluginDescriptor.GetSettingKey("LimitedToStores")).ToIntArrayContains(store.Id, true)))
+                return;
 
-			if (!(pluginDescriptor.Instance() is VerizonSmsProvider plugin))
-				return;
+            if (!(pluginDescriptor.Instance() is VerizonSmsProvider plugin))
+                return;
 
-			var order = eventMessage.Order;
+            var order = eventMessage.Order;
 
-			//send SMS
-			var message = _services.Localization.GetResource("Plugins.Sms.Verizon.OrderPlacedMessage").FormatInvariant(order.GetOrderNumber());
-			if (plugin.SendSms(message))
+            //send SMS
+            var message = _services.Localization.GetResource("Plugins.Sms.Verizon.OrderPlacedMessage").FormatInvariant(order.GetOrderNumber());
+            if (plugin.SendSms(message))
             {
-				_orderService.AddOrderNote(order, _services.Localization.GetResource("Plugins.Sms.Verizon.OrderPlacedMessageSend"));
+                _orderService.AddOrderNote(order, _services.Localization.GetResource("Plugins.Sms.Verizon.OrderPlacedMessageSend"));
             }
         }
     }

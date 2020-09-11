@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity.Migrations;
-using SmartStore.Core.Domain.Tasks;
 using SmartStore.Core.Plugins;
 using SmartStore.MailChimp.Data;
 using SmartStore.MailChimp.Data.Migrations;
@@ -8,7 +7,7 @@ using SmartStore.Services.Tasks;
 
 namespace SmartStore.MailChimp.Services
 {
-	public class MailChimpInstallationService
+    public class MailChimpInstallationService
     {
         private readonly MailChimpObjectContext _mailChimpObjectContext;
         private readonly IScheduleTaskService _scheduleTaskService;
@@ -28,14 +27,14 @@ namespace SmartStore.MailChimp.Services
         /// </summary>
         private void InstallSyncTask()
         {
-			_scheduleTaskService.GetOrAddTask<MailChimpSynchronizationTask>(x => 
-			{
-				x.Name = "MailChimp sync";
-				x.CronExpression = "0 */1 * * *"; // Every hour
-				x.Enabled = false;
-			});
+            _scheduleTaskService.GetOrAddTask<MailChimpSynchronizationTask>(x =>
+            {
+                x.Name = "MailChimp sync";
+                x.CronExpression = "0 */1 * * *"; // Every hour
+                x.Enabled = false;
+            });
 
-		}
+        }
 
         /// <summary>
         /// Installs this instance.
@@ -59,10 +58,10 @@ namespace SmartStore.MailChimp.Services
             //locales
             _localizationService.DeleteLocaleStringResources(plugin.PluginDescriptor.ResourceRootKey);
 
-			_scheduleTaskService.TryDeleteTask<MailChimpSynchronizationTask>();
+            _scheduleTaskService.TryDeleteTask<MailChimpSynchronizationTask>();
 
-			var migrator = new DbMigrator(new Configuration());
-			migrator.Update(DbMigrator.InitialDatabase);
+            var migrator = new DbMigrator(new Configuration());
+            migrator.Update(DbMigrator.InitialDatabase);
         }
     }
 }

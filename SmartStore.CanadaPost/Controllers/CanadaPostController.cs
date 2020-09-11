@@ -6,7 +6,7 @@ using SmartStore.Web.Framework.Security;
 
 namespace SmartStore.CanadaPost.Controllers
 {
-	[AdminAuthorize]
+    [AdminAuthorize]
     public class CanadaPostController : PluginControllerBase
     {
         private readonly CanadaPostSettings _canadaPostSettings;
@@ -35,14 +35,14 @@ namespace SmartStore.CanadaPost.Controllers
             {
                 return Configure();
             }
-            
+
             //save settings
             _canadaPostSettings.Url = model.Url;
             _canadaPostSettings.Port = model.Port;
             _canadaPostSettings.CustomerId = model.CustomerId.TrimSafe();
             _settingService.SaveSetting(_canadaPostSettings);
 
-			return RedirectToConfiguration("SmartStore.CanadaPost", false);
-		}
+            return RedirectToConfiguration("SmartStore.CanadaPost", false);
+        }
     }
 }

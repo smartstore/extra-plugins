@@ -42,7 +42,7 @@ namespace SmartStore.MailChimp.Services
 
             _repository.Insert(record);
         }
-        
+
         /// <summary>
         /// Queues all subscriptions.
         /// </summary>
@@ -62,7 +62,7 @@ namespace SmartStore.MailChimp.Services
         public virtual IList<MailChimpEventQueueRecord> GetAll()
         {
             var query = from r in _repository.Table
-                        orderby r.CreatedOnUtc descending 
+                        orderby r.CreatedOnUtc descending
                         select r;
 
             return query.ToList();

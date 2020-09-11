@@ -11,7 +11,7 @@ using SmartStore.Web.Framework.Security;
 
 namespace SmartStore.UPS.Controllers
 {
-	[AdminAuthorize]
+    [AdminAuthorize]
     public class UPSController : PluginControllerBase
     {
         private readonly UPSSettings _upsSettings;
@@ -35,13 +35,13 @@ namespace SmartStore.UPS.Controllers
             model.Password = _upsSettings.Password;
             model.AdditionalHandlingCharge = _upsSettings.AdditionalHandlingCharge;
             model.InsurePackage = _upsSettings.InsurePackage;
-			model.PrimaryStoreCurrencyCode = Services.StoreContext.CurrentStore.PrimaryStoreCurrency.CurrencyCode;
+            model.PrimaryStoreCurrencyCode = Services.StoreContext.CurrentStore.PrimaryStoreCurrency.CurrencyCode;
 
-			foreach (UPSCustomerClassification customerClassification in Enum.GetValues(typeof(UPSCustomerClassification)))
+            foreach (UPSCustomerClassification customerClassification in Enum.GetValues(typeof(UPSCustomerClassification)))
             {
                 model.AvailableCustomerClassifications.Add(new SelectListItem
                 {
-					Text = Inflector.Titleize(customerClassification.ToString()),
+                    Text = Inflector.Titleize(customerClassification.ToString()),
                     Value = customerClassification.ToString(),
                     Selected = customerClassification == _upsSettings.CustomerClassification
                 });
@@ -50,7 +50,7 @@ namespace SmartStore.UPS.Controllers
             {
                 model.AvailablePickupTypes.Add(new SelectListItem
                 {
-					Text = Inflector.Titleize(pickupType.ToString()),
+                    Text = Inflector.Titleize(pickupType.ToString()),
                     Value = pickupType.ToString(),
                     Selected = pickupType == _upsSettings.PickupType
                 });
@@ -59,7 +59,7 @@ namespace SmartStore.UPS.Controllers
             {
                 model.AvailablePackagingTypes.Add(new SelectListItem
                 {
-					Text = Inflector.Titleize(packagingType.ToString()),
+                    Text = Inflector.Titleize(packagingType.ToString()),
                     Value = packagingType.ToString(),
                     Selected = packagingType == _upsSettings.PackagingType
                 });
@@ -74,32 +74,32 @@ namespace SmartStore.UPS.Controllers
                     Selected = country.Id == _upsSettings.DefaultShippedFromCountryId
                 });
             }
-			model.DefaultShippedFromCountryId = _upsSettings.DefaultShippedFromCountryId;
+            model.DefaultShippedFromCountryId = _upsSettings.DefaultShippedFromCountryId;
             model.DefaultShippedFromZipPostalCode = _upsSettings.DefaultShippedFromZipPostalCode;
 
-			// Load Domestic service names
-			var services = new UPSServices();
+            // Load Domestic service names
+            var services = new UPSServices();
             var carrierServicesOfferedDomestic = _upsSettings.CarrierServicesOffered;
-			foreach (string service in services.Services)
-			{
-				model.AvailableCarrierServices.Add(service);
-			}
+            foreach (string service in services.Services)
+            {
+                model.AvailableCarrierServices.Add(service);
+            }
 
-			if (!String.IsNullOrEmpty(carrierServicesOfferedDomestic))
-			{
-				foreach (string service in services.Services)
-				{
-					var serviceId = UPSServices.GetServiceId(service);
-					if (!String.IsNullOrEmpty(serviceId) && !String.IsNullOrEmpty(carrierServicesOfferedDomestic))
-					{
-						// Add delimiters [] so that single digit IDs aren't found in multi-digit IDs
-						if (carrierServicesOfferedDomestic.Contains(String.Format("[{0}]", serviceId)))
-						{
-							model.CarrierServicesOffered.Add(service);
-						}
-					}
-				}
-			}
+            if (!String.IsNullOrEmpty(carrierServicesOfferedDomestic))
+            {
+                foreach (string service in services.Services)
+                {
+                    var serviceId = UPSServices.GetServiceId(service);
+                    if (!String.IsNullOrEmpty(serviceId) && !String.IsNullOrEmpty(carrierServicesOfferedDomestic))
+                    {
+                        // Add delimiters [] so that single digit IDs aren't found in multi-digit IDs
+                        if (carrierServicesOfferedDomestic.Contains(String.Format("[{0}]", serviceId)))
+                        {
+                            model.CarrierServicesOffered.Add(service);
+                        }
+                    }
+                }
+            }
 
             return View(model);
         }
@@ -150,7 +150,7 @@ namespace SmartStore.UPS.Controllers
 
             _settingService.SaveSetting(_upsSettings);
 
-			return RedirectToConfiguration("SmartStore.UPS");
-		}
+            return RedirectToConfiguration("SmartStore.UPS");
+        }
     }
 }

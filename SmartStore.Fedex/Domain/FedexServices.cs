@@ -41,10 +41,7 @@ namespace SmartStore.Fedex.Domain
         /// <summary>
         /// FedEx services string names
         /// </summary>
-        public string[] Services
-        {
-            get { return _services; }
-        }
+        public string[] Services => _services;
 
         #endregion
 

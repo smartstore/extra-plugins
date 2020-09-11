@@ -25,18 +25,18 @@ namespace SmartStore.TwitterAuth.Core
 
         private readonly IExternalAuthorizer _authorizer;
         private readonly HttpContextBase _httpContext;
-		private readonly ICommonServices _services;
+        private readonly ICommonServices _services;
         private readonly TwitterExternalAuthSettings _twitterSettings;
 
         public TwitterProviderAuthorizer(
             IExternalAuthorizer authorizer,
             HttpContextBase httpContext,
-			ICommonServices services,
+            ICommonServices services,
             TwitterExternalAuthSettings twitterSettings)
         {
             _authorizer = authorizer;
             _httpContext = httpContext;
-			_services = services;
+            _services = services;
             _twitterSettings = twitterSettings;
 
             Logger = NullLogger.Instance;

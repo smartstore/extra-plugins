@@ -4,7 +4,7 @@ namespace SmartStore.UPS.Domain
     /// <summary>
     /// UPSP packaging type
     /// </summary>
-    public enum UPSPackagingType 
+    public enum UPSPackagingType
     {
         /// <summary>
         /// Customer supplied package

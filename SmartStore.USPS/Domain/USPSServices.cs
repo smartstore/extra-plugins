@@ -35,8 +35,8 @@ namespace SmartStore.USPS.Domain
         /// <summary>
         /// V3 USPS International services
         /// </summary>
-        private string[] _internationalServices = {    
-                                                    "NONE (disable all international services)",                                
+        private string[] _internationalServices = {
+                                                    "NONE (disable all international services)",
                                                     "Global Express Guaranteed (GXG)",
                                                     "Global Express Guaranteed Non-Document Rectangular",
                                                     "Global Express Guaranteed Non-Document Non-Rectangular",
@@ -57,18 +57,12 @@ namespace SmartStore.USPS.Domain
         /// <summary>
         /// USPS Domestic services string names
         /// </summary>
-        public string[] DomesticServices
-        {
-            get { return _domesticServices; }
-        }
+        public string[] DomesticServices => _domesticServices;
 
         /// <summary>
         /// USPS International services string names
         /// </summary>
-        public string[] InternationalServices
-        {
-            get { return _internationalServices; }
-        }
+        public string[] InternationalServices => _internationalServices;
 
         #endregion
 

@@ -11,15 +11,15 @@ namespace SmartStore.Glimpse.Infrastructure
         public RuntimePolicy Execute(IRuntimePolicyContext policyContext)
         {
             // You can perform a check like the one below to control Glimpse's permissions within your application.
-			// More information about RuntimePolicies can be found at http://getglimpse.com/Help/Custom-Runtime-Policy
-			// var httpContext = policyContext.GetHttpContext();
+            // More information about RuntimePolicies can be found at http://getglimpse.com/Help/Custom-Runtime-Policy
+            // var httpContext = policyContext.GetHttpContext();
             // if (!httpContext.User.IsInRole("Administrator"))
-			// {
+            // {
             //     return RuntimePolicy.Off;
-			// }
+            // }
 
             var settings = EngineContext.Current.Resolve<GlimpseSettings>();
-            
+
             if (!settings.IsEnabled)
                 return RuntimePolicy.Off;
 
@@ -31,13 +31,13 @@ namespace SmartStore.Glimpse.Infrastructure
                     return RuntimePolicy.Off;
             }
 
-			if (settings.AllowAdministratorsOnly)
-			{
-				if (!workContext.CurrentCustomer.IsAdmin())
-				{
-					return RuntimePolicy.Off;
-				}
-			}
+            if (settings.AllowAdministratorsOnly)
+            {
+                if (!workContext.CurrentCustomer.IsAdmin())
+                {
+                    return RuntimePolicy.Off;
+                }
+            }
 
             if (!settings.EnableOnRemoteServer)
             {
@@ -51,12 +51,6 @@ namespace SmartStore.Glimpse.Infrastructure
             return RuntimePolicy.On;
         }
 
-        public RuntimeEvent ExecuteOn
-        {
-            get 
-			{ 
-				return RuntimeEvent.EndRequest; 
-			}
-        }
+        public RuntimeEvent ExecuteOn => RuntimeEvent.EndRequest;
     }
 }

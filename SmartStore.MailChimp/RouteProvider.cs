@@ -13,28 +13,25 @@ namespace SmartStore.MailChimp
                 new { controller = "MailChimp", action = "Configure" },
                 new[] { "SmartStore.MailChimp.Controllers" }
             )
-			.DataTokens["area"] = "SmartStore.MailChimp";
+            .DataTokens["area"] = "SmartStore.MailChimp";
 
-			routes.MapRoute("SmartStore.MailChimp.WebHook",
-				"Plugins/SmartStore.MailChimp/WebHook/{webHookKey}",
+            routes.MapRoute("SmartStore.MailChimp.WebHook",
+                "Plugins/SmartStore.MailChimp/WebHook/{webHookKey}",
                 new { controller = "WebHooks", action = "index" },
                 new[] { "SmartStore.MailChimp.Controllers" }
-			)
-			.DataTokens["area"] = "SmartStore.MailChimp";
+            )
+            .DataTokens["area"] = "SmartStore.MailChimp";
 
-			// Legacy
-			routes.MapRoute("SmartStore.MailChimp.WebHook.Legacy",
-				"Plugins/MiscMailChimp/WebHook/{webHookKey}",
-				new { controller = "WebHooks", action = "index" },
-				new[] { "SmartStore.MailChimp.Controllers" }
-			)
-			.DataTokens["area"] = "SmartStore.MailChimp";
+            // Legacy
+            routes.MapRoute("SmartStore.MailChimp.WebHook.Legacy",
+                "Plugins/MiscMailChimp/WebHook/{webHookKey}",
+                new { controller = "WebHooks", action = "index" },
+                new[] { "SmartStore.MailChimp.Controllers" }
+            )
+            .DataTokens["area"] = "SmartStore.MailChimp";
         }
 
-        public int Priority
-        {
-            get { return 0; }
-        }
+        public int Priority => 0;
 
     }
 }

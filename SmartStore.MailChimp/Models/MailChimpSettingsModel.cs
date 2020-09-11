@@ -55,8 +55,8 @@ namespace SmartStore.MailChimp.Models
         /// </value>
         public virtual IList<SelectListItem> ListOptions
         {
-            get { return _listOptions ?? (_listOptions = new List<SelectListItem>()); }
-            set { _listOptions = value; }
+            get => _listOptions ?? (_listOptions = new List<SelectListItem>());
+            set => _listOptions = value;
         }
 
         public string SaveResult { get; set; }

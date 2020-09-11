@@ -25,10 +25,10 @@ using SmartStore.UPS.Domain;
 
 namespace SmartStore.UPS
 {
-	/// <summary>
-	/// UPS computation method
-	/// </summary>
-	public class UPSComputationMethod : BasePlugin, IShippingRateComputationMethod, IConfigurable
+    /// <summary>
+    /// UPS computation method
+    /// </summary>
+    public class UPSComputationMethod : BasePlugin, IShippingRateComputationMethod, IConfigurable
     {
         #region Constants
 
@@ -47,20 +47,20 @@ namespace SmartStore.UPS
         private readonly ICountryService _countryService;
         private readonly IOrderTotalCalculationService _orderTotalCalculationService;
         private readonly ILogger _logger;
-		private readonly ICommonServices _services;
+        private readonly ICommonServices _services;
 
         #endregion
 
         #region Ctor
 
         public UPSComputationMethod(
-			IMeasureService measureService,
+            IMeasureService measureService,
             IShippingService shippingService,
             UPSSettings upsSettings,
-			ICountryService countryService,
+            ICountryService countryService,
             IOrderTotalCalculationService orderTotalCalculationService,
-			ILogger logger,
-			ICommonServices services)
+            ILogger logger,
+            ICommonServices services)
         {
             this._measureService = measureService;
             this._shippingService = shippingService;
@@ -68,18 +68,18 @@ namespace SmartStore.UPS
             this._countryService = countryService;
             this._orderTotalCalculationService = orderTotalCalculationService;
             this._logger = logger;
-			this._services = services;
+            this._services = services;
 
-			T = NullLocalizer.Instance;
-		}
+            T = NullLocalizer.Instance;
+        }
 
-		public Localizer T { get; set; }
+        public Localizer T { get; set; }
 
-		#endregion
+        #endregion
 
-		#region Utilities
+        #region Utilities
 
-		private string CreateRequest(string accessKey, string username, string password,
+        private string CreateRequest(string accessKey, string username, string password,
             GetShippingOptionRequest getShippingOptionRequest, UPSCustomerClassification customerClassification,
             UPSPickupType pickupType, UPSPackagingType packagingType)
         {
@@ -132,7 +132,7 @@ namespace SmartStore.UPS
             sb.Append("<CustomerContext>Bare Bones Rate Request</CustomerContext>");
             sb.Append("<XpciVersion>1.0001</XpciVersion>");
             sb.Append("</TransactionReference>");
-            
+
             sb.Append("<RequestOption>Shop</RequestOption>");
             sb.Append("</Request>");
             if (String.Equals(countryCodeFrom, "US", StringComparison.InvariantCultureIgnoreCase) == true)
@@ -146,8 +146,8 @@ namespace SmartStore.UPS
             }
             sb.Append("<Shipment>");
             sb.Append("<Shipper>");
-			sb.AppendFormat("<ShipperNumber>{0}</ShipperNumber>", _upsSettings.Username);
-			sb.Append("<Address>");
+            sb.AppendFormat("<ShipperNumber>{0}</ShipperNumber>", _upsSettings.Username);
+            sb.Append("<Address>");
             sb.AppendFormat("<PostalCode>{0}</PostalCode>", zipPostalCodeFrom);
             sb.AppendFormat("<CountryCode>{0}</CountryCode>", countryCodeFrom);
             sb.Append("</Address>");
@@ -169,11 +169,11 @@ namespace SmartStore.UPS
             sb.Append("<Code>03</Code>");
             sb.Append("</Service>");
 
-			sb.Append("<RateInformation>");
-			sb.Append("<NegotiatedRatesIndicator/>");
-			sb.Append("</RateInformation>");
+            sb.Append("<RateInformation>");
+            sb.Append("<NegotiatedRatesIndicator/>");
+            sb.Append("</RateInformation>");
 
-			if ((!IsPackageTooHeavy(weight)) && (!IsPackageTooLarge(length, height, width)))
+            if ((!IsPackageTooHeavy(weight)) && (!IsPackageTooLarge(length, height, width)))
             {
                 sb.Append("<Package>");
                 sb.Append("<PackagingType>");
@@ -253,7 +253,7 @@ namespace SmartStore.UPS
                     {
                         sb.Append("<PackageServiceOptions>");
                         sb.Append("<InsuredValue>");
-						sb.AppendFormat("<CurrencyCode>{0}</CurrencyCode>", _services.StoreContext.CurrentStore.PrimaryStoreCurrency.CurrencyCode);
+                        sb.AppendFormat("<CurrencyCode>{0}</CurrencyCode>", _services.StoreContext.CurrentStore.PrimaryStoreCurrency.CurrencyCode);
                         sb.AppendFormat("<MonetaryValue>{0}</MonetaryValue>", packageInsurancePrice);
                         sb.Append("</InsuredValue>");
                         sb.Append("</PackageServiceOptions>");
@@ -527,7 +527,7 @@ namespace SmartStore.UPS
                 return response;
             }
 
-			if (getShippingOptionRequest.ShippingAddress == null || getShippingOptionRequest.ShippingAddress.Country == null)
+            if (getShippingOptionRequest.ShippingAddress == null || getShippingOptionRequest.ShippingAddress.Country == null)
             {
                 return response;
             }
@@ -584,9 +584,9 @@ namespace SmartStore.UPS
         {
             actionName = "Configure";
             controllerName = "UPS";
-			routeValues = new RouteValueDictionary() { { "area", "SmartStore.UPS" } };
+            routeValues = new RouteValueDictionary() { { "area", "SmartStore.UPS" } };
         }
-        
+
         /// <summary>
         /// Install plugin
         /// </summary>
@@ -604,10 +604,10 @@ namespace SmartStore.UPS
                 PackagingType = UPSPackagingType.ExpressBox,
                 DefaultShippedFromZipPostalCode = "10001"
             };
-			_services.Settings.SaveSetting(settings);
+            _services.Settings.SaveSetting(settings);
 
             //locales
-			_services.Localization.ImportPluginResourcesFromXml(this.PluginDescriptor);
+            _services.Localization.ImportPluginResourcesFromXml(this.PluginDescriptor);
 
             base.Install();
         }
@@ -618,7 +618,7 @@ namespace SmartStore.UPS
         public override void Uninstall()
         {
             //locales
-			_services.Localization.DeleteLocaleStringResources(this.PluginDescriptor.ResourceRootKey);
+            _services.Localization.DeleteLocaleStringResources(this.PluginDescriptor.ResourceRootKey);
 
             base.Uninstall();
         }
@@ -630,26 +630,14 @@ namespace SmartStore.UPS
         /// <summary>
         /// Gets a shipping rate computation method type
         /// </summary>
-        public ShippingRateComputationMethodType ShippingRateComputationMethodType
-        {
-            get
-            {
-                return ShippingRateComputationMethodType.Realtime;
-            }
-        }
+        public ShippingRateComputationMethodType ShippingRateComputationMethodType => ShippingRateComputationMethodType.Realtime;
 
         /// <summary>
         /// Gets a shipment tracker
         /// </summary>
-        public IShipmentTracker ShipmentTracker
-        {
-			get { return new UPSShipmentTracker(_logger, _services.Localization, _upsSettings); }
-        }
+        public IShipmentTracker ShipmentTracker => new UPSShipmentTracker(_logger, _services.Localization, _upsSettings);
 
-		public bool IsActive
-		{
-			get { return true; }
-		}
+        public bool IsActive => true;
 
         #endregion
     }

@@ -17,7 +17,7 @@ namespace SmartStore.LivePersonChat.Controllers
             this._livePersonChatSettings = livePersonChatSettings;
             this._settingService = settingService;
         }
-        
+
         [AdminAuthorize]
         [ChildActionOnly]
         public ActionResult Configure()
@@ -35,7 +35,7 @@ namespace SmartStore.LivePersonChat.Controllers
         {
             if (!ModelState.IsValid)
                 return Configure();
-            
+
             // save settings
             _livePersonChatSettings.MonitoringCode = model.MonitoringCode;
             _settingService.SaveSetting(_livePersonChatSettings);

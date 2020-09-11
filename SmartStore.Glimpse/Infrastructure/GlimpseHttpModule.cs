@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Reflection;
-using System.Web;
-using System.Web.Compilation;
+using System.Collections.Generic;
 using System.Linq;
-using G = Glimpse;
+using System.Reflection;
+using System.Threading;
+using System.Web;
 using Glimpse.AspNet;
-using Glimpse.AspNet.Extensions;
+using Glimpse.AspNet.Policy;
 using Glimpse.Core.Extensibility;
 using Glimpse.Core.Framework;
-using SmartStore.Core.Infrastructure;
-using Glimpse.AspNet.Policy;
-using System.Collections.Generic;
-using System.Threading;
 using Glimpse.Mvc.Inspector;
+using SmartStore.Core.Infrastructure;
+using G = Glimpse;
 
 namespace SmartStore.Glimpse.Infrastructure
 {
-    
+
     public class GlimpseHttpModule : IHttpModule
     {
         private const string RuntimeKey = "__GlimpseRuntime";
@@ -30,8 +28,8 @@ namespace SmartStore.Glimpse.Infrastructure
             var userLocator = new GlimpseServiceLocator();
             Factory = new Factory(providerLocator/*, userLocator >> CRASHES */);
 
-			AppDomain.CurrentDomain.SetData(LoggerKey, Factory.InstantiateLogger());
-			AppDomain.CurrentDomain.DomainUnload += OnAppDomainUnload;
+            AppDomain.CurrentDomain.SetData(LoggerKey, Factory.InstantiateLogger());
+            AppDomain.CurrentDomain.DomainUnload += OnAppDomainUnload;
         }
 
         public void Init(HttpApplication httpApplication)
@@ -58,13 +56,13 @@ namespace SmartStore.Glimpse.Infrastructure
             }
         }
 
-		internal static void OnAppDomainUnload(object sender, EventArgs e)
+        internal static void OnAppDomainUnload(object sender, EventArgs e)
         {
             var appDomain = sender as AppDomain;
             var logger = appDomain.GetData(LoggerKey) as ILogger;
 
-			if (logger == null)
-				return;
+            if (logger == null)
+                return;
 
             string shutDownMessage = "Reason for shutdown: ";
             var httpRuntimeType = typeof(HttpRuntime);
@@ -82,9 +80,9 @@ namespace SmartStore.Glimpse.Infrastructure
 
             logger.Fatal("App domain with Id: '{0}' and BaseDirectory: '{1}' has been unloaded. Any in memory data stores have been lost.{2}", appDomain.Id, appDomain.BaseDirectory, shutDownMessage);
 
-			// NLog writes its logs asynchronously, which means that if we don't wait, chances are the log will not be written 
-			// before the appdomain is actually shut down, so we sleep for 100ms and hopefully that is enough for NLog to do its thing
-			Thread.Sleep(100);
+            // NLog writes its logs asynchronously, which means that if we don't wait, chances are the log will not be written 
+            // before the appdomain is actually shut down, so we sleep for 100ms and hopefully that is enough for NLog to do its thing
+            Thread.Sleep(100);
         }
 
         internal IGlimpseRuntime GetRuntime(HttpApplicationStateBase applicationState)
@@ -114,12 +112,12 @@ namespace SmartStore.Glimpse.Infrastructure
                             }
                         }
 
-						var crashingInspector = config.Inspectors.Where(x => x is DependencyInjectionInspector).FirstOrDefault();
-						if (crashingInspector != null)
-						{
-							// get rid of this shit! (https://github.com/Glimpse/Glimpse/issues/513)
-							config.Inspectors.Remove(crashingInspector);
-						}
+                        var crashingInspector = config.Inspectors.Where(x => x is DependencyInjectionInspector).FirstOrDefault();
+                        if (crashingInspector != null)
+                        {
+                            // get rid of this shit! (https://github.com/Glimpse/Glimpse/issues/513)
+                            config.Inspectors.Remove(crashingInspector);
+                        }
 
                         var settings = EngineContext.Current.Resolve<GlimpseSettings>();
 
@@ -162,8 +160,8 @@ namespace SmartStore.Glimpse.Infrastructure
                             if (!settings.ShowViewsTab)
                                 RemoveTabFromCollection<G.Mvc.Tab.Views>(tabs);
 
-							//if (!settings.ShowSqlTab)
-							//	RemoveTabFromCollection<G.Ado.Tab.SQL>(tabs);
+                            //if (!settings.ShowSqlTab)
+                            //	RemoveTabFromCollection<G.Ado.Tab.SQL>(tabs);
 
                         }
 

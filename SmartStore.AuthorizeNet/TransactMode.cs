@@ -12,6 +12,6 @@ namespace SmartStore.AuthorizeNet
         /// <summary>
         /// Authorize and capture
         /// </summary>
-        AuthorizeAndCapture= 2
+        AuthorizeAndCapture = 2
     }
 }

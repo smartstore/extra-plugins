@@ -10,17 +10,11 @@ namespace SmartStore.AuthorizeNet
         {
             routes.MapRoute("SmartStore.AuthorizeNet",
                  "Plugins/SmartStore.AuthorizeNet/{action}",
-                 new { controller = "AuthorizeNet"},
+                 new { controller = "AuthorizeNet" },
                  new[] { "SmartStore.AuthorizeNet.Controllers" }
             )
             .DataTokens["area"] = "SmartStore.AuthorizeNet";
         }
-        public int Priority
-        {
-            get
-            {
-                return 0;
-            }
-        }
+        public int Priority => 0;
     }
 }

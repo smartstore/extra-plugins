@@ -13,15 +13,9 @@ namespace SmartStore.Plugin.Shipping.CanadaPost
                  new { controller = "CanadaPost", action = "Configure" },
                  new[] { "SmartStore.CanadaPost.Controllers" }
             )
-			.DataTokens["area"] = "SmartStore.CanadaPost";
+            .DataTokens["area"] = "SmartStore.CanadaPost";
         }
 
-        public int Priority
-        {
-            get
-            {
-                return 0;
-            }
-        }
+        public int Priority => 0;
     }
 }

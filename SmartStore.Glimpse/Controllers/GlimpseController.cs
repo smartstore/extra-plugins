@@ -9,7 +9,7 @@ using SmartStore.Web.Framework.Settings;
 
 namespace SmartStore.Glimpse.Controllers
 {
-	public class GlimpseController : PluginControllerBase
+    public class GlimpseController : PluginControllerBase
     {
         public ActionResult Index([Bind(Prefix = "n")] string resourceName)
         {
@@ -31,30 +31,30 @@ namespace SmartStore.Glimpse.Controllers
                 runtime.ExecuteResource(resourceName, new ResourceParameters(httpContext.Request.QueryString.ToDictionary()));
             }
 
-			return new EmptyResult();
+            return new EmptyResult();
         }
 
         [ChildActionOnly, AdminAuthorize, LoadSetting]
         public ActionResult Configure(GlimpseSettings settings)
         {
-			var model = new ConfigurationModel();
-			MiniMapper.Map(settings, model);
+            var model = new ConfigurationModel();
+            MiniMapper.Map(settings, model);
 
-			return View(model);
+            return View(model);
         }
 
         [HttpPost, AdminAuthorize, ChildActionOnly, SaveSetting]
         public ActionResult Configure(ConfigurationModel model, GlimpseSettings settings)
         {
-			if (!ModelState.IsValid)
-			{
-				return Configure(settings);
-			}
+            if (!ModelState.IsValid)
+            {
+                return Configure(settings);
+            }
 
-			MiniMapper.Map(model, settings);
-			NotifySuccess(T("Admin.Common.DataSuccessfullySaved"));
+            MiniMapper.Map(model, settings);
+            NotifySuccess(T("Admin.Common.DataSuccessfullySaved"));
 
-			return RedirectToConfiguration("SmartStore.Glimpse");
-		}
+            return RedirectToConfiguration("SmartStore.Glimpse");
+        }
     }
 }

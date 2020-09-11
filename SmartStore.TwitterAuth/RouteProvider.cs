@@ -10,12 +10,12 @@ namespace SmartStore.TwitterAuth
 
         public void RegisterRoutes(RouteCollection routes)
         {
-			routes.MapRoute(TwitterExternalAuthMethod.SystemName,
-				 "Plugins/SmartStore.TwitterAuth/{action}",
+            routes.MapRoute(TwitterExternalAuthMethod.SystemName,
+                 "Plugins/SmartStore.TwitterAuth/{action}",
                  new { controller = "ExternalAuthTwitter", action = "Configure" },
                  new[] { "SmartStore.TwitterAuth.Controllers" }
             )
-			.DataTokens["area"] = TwitterExternalAuthMethod.SystemName;
+            .DataTokens["area"] = TwitterExternalAuthMethod.SystemName;
         }
     }
 }

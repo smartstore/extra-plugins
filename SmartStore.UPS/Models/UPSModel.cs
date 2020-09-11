@@ -5,7 +5,7 @@ using SmartStore.Web.Framework;
 
 namespace SmartStore.UPS.Models
 {
-	public class UPSModel
+    public class UPSModel
     {
         public UPSModel()
         {
@@ -27,7 +27,7 @@ namespace SmartStore.UPS.Models
         public string Username { get; set; }
 
         [SmartResourceDisplayName("Plugins.Shipping.UPS.Fields.Password")]
-		[DataType(DataType.Password)]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [SmartResourceDisplayName("Plugins.Shipping.UPS.Fields.AdditionalHandlingCharge")]
@@ -60,6 +60,6 @@ namespace SmartStore.UPS.Models
         [SmartResourceDisplayName("Plugins.Shipping.UPS.Fields.AvailableCarrierServices")]
         public IList<string> AvailableCarrierServices { get; set; }
         public string[] CheckedCarrierServices { get; set; }
-		public string PrimaryStoreCurrencyCode { get; set; }
-	}
+        public string PrimaryStoreCurrencyCode { get; set; }
+    }
 }

@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Glimpse.Core.Framework;
 using G = Glimpse;
 
 namespace SmartStore.Glimpse.Infrastructure
 {
-    
+
     public class GlimpseServiceLocator : IServiceLocator
     {
-        private static readonly Assembly[] s_scannableAssemblies = new Assembly[] 
-        { 
+        private static readonly Assembly[] s_scannableAssemblies = new Assembly[]
+        {
             typeof(G.Settings).Assembly,
             typeof(G.AspNet.AspNetServiceLocator).Assembly,
             typeof(G.Mvc.Model.MvcDisplayModel).Assembly,
@@ -23,35 +21,35 @@ namespace SmartStore.Glimpse.Infrastructure
             typeof(GlimpseServiceLocator).Assembly
         };
 
-		private static string BaseDirectory
-		{
-			get
-			{
-				AppDomainSetup setupInformation = AppDomain.CurrentDomain.SetupInformation;
-				if (!string.Equals(setupInformation.ShadowCopyFiles, "true", StringComparison.OrdinalIgnoreCase))
-				{
-					return AppDomain.CurrentDomain.BaseDirectory;
-				}
-				return Path.Combine(setupInformation.CachePath, setupInformation.ApplicationName);
-			}
-		}
+        private static string BaseDirectory
+        {
+            get
+            {
+                AppDomainSetup setupInformation = AppDomain.CurrentDomain.SetupInformation;
+                if (!string.Equals(setupInformation.ShadowCopyFiles, "true", StringComparison.OrdinalIgnoreCase))
+                {
+                    return AppDomain.CurrentDomain.BaseDirectory;
+                }
+                return Path.Combine(setupInformation.CachePath, setupInformation.ApplicationName);
+            }
+        }
 
         public ICollection<T> GetAllInstances<T>() where T : class
         {
-			var baseDir = BaseDirectory;
-			
-			var instances = new List<T>();
+            var baseDir = BaseDirectory;
+
+            var instances = new List<T>();
             foreach (var assembly in s_scannableAssemblies)
             {
-				var probePath = Path.Combine(baseDir, assembly.GetName().Name + ".dll");
-				var probeAssembly = Assembly.LoadFrom(probePath);
+                var probePath = Path.Combine(baseDir, assembly.GetName().Name + ".dll");
+                var probeAssembly = Assembly.LoadFrom(probePath);
 
-				Type[] types;
+                Type[] types;
                 try
                 {
-					types = probeAssembly.GetTypes();
+                    types = probeAssembly.GetTypes();
                 }
-                catch 
+                catch
                 {
                     types = Enumerable.Empty<Type>().ToArray();
                 }
