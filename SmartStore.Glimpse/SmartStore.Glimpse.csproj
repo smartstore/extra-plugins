@@ -205,7 +205,9 @@
     <Content Include="Views\Web.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="web.config" />
+    <None Include="web.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
