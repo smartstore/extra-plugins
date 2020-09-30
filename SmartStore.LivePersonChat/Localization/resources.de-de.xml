@@ -35,4 +35,7 @@
   <LocaleResource Name="MonitoringCode.Hint">
     <Value>Geben Sie hier Ihren Monitoring-Code an.</Value>
   </LocaleResource>
+  <LocaleResource Name="CookieInfo">
+    <Value>Das LivePerson-Chat-Widget nutzt Cookies zur eindeutigen Identifizierung der aktuellen Kommunikation.</Value>
+  </LocaleResource>
 </Language>

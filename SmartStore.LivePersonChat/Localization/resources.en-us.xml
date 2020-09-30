@@ -1,6 +1,6 @@
 ﻿<Language Name="English" IsDefault="false" IsRightToLeft="false">
   <LocaleResource Name="Plugins.FriendlyName.SmartStore.LivePersonChat" AppendRootKey="false">
-    <Value>Live person (Chat)</Value>
+    <Value>LivePerson (Chat)</Value>
   </LocaleResource>
   <LocaleResource Name="AdminInstruction">
     <Value>
@@ -34,5 +34,8 @@
   </LocaleResource>
   <LocaleResource Name="MonitoringCode.Hint">
     <Value>Enter your monitoring code here.</Value>
+  </LocaleResource>
+  <LocaleResource Name="CookieInfo">
+    <Value>The LivePerson chat widget uses cookies to uniquely identify the current communication.</Value>
   </LocaleResource>
 </Language>

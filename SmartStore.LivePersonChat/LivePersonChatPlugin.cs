@@ -1,26 +1,37 @@
 using System.Collections.Generic;
 using System.Web.Routing;
+using SmartStore.Core.Domain.Cms;
 using SmartStore.Core.Plugins;
+using SmartStore.Services;
 using SmartStore.Services.Cms;
 using SmartStore.Services.Configuration;
 using SmartStore.Services.Localization;
 
 namespace SmartStore.LivePersonChat
 {
-    /// <summary>
-    /// Live person provider
-    /// </summary>
-	public class LivePersonChatPlugin : BasePlugin, IWidget, IConfigurable
+	public class LivePersonChatPlugin : BasePlugin, IWidget, IConfigurable, ICookiePublisher
     {
         private readonly LivePersonChatSettings _livePersonChatSettings;
         private readonly ILocalizationService _localizationService;
         private readonly ISettingService _settingService;
+        private readonly IWidgetService _widgetService;
+        private readonly WidgetSettings _widgetSettings;
+        private readonly ICommonServices _services;
 
-        public LivePersonChatPlugin(LivePersonChatSettings livePersonChatSettings, ILocalizationService localizationService, ISettingService settingService)
+        public LivePersonChatPlugin(
+            LivePersonChatSettings livePersonChatSettings, 
+            ILocalizationService localizationService, 
+            ISettingService settingService,
+            IWidgetService widgetService,
+            WidgetSettings widgetSettings,
+            ICommonServices services)
         {
             _livePersonChatSettings = livePersonChatSettings;
             _localizationService = localizationService;
             _settingService = settingService;
+            _widgetService = widgetService;
+            _widgetSettings = widgetSettings;
+            _services = services;
         }
 
         /// <summary>
@@ -65,8 +76,25 @@ namespace SmartStore.LivePersonChat
         }
 
         /// <summary>
-        /// Install plugin
+        /// Gets CookieInfos for display in CookieManager dialog.
         /// </summary>
+        /// <returns>CookieInfo containing plugin name, cookie purpose description & cookie type</returns>
+        public List<CookieInfo> GetCookieInfo()
+        {
+            var widget = _widgetService.LoadWidgetBySystemName("SmartStore.LivePersonChat");
+            if (!widget.IsWidgetActive(_widgetSettings))
+                return null;
+
+            var cookieInfo = new CookieInfo
+            {
+                Name = _services.Localization.GetResource("Plugins.FriendlyName.SmartStore.LivePersonChat"),
+                Description = _services.Localization.GetResource("Plugins.Payments.AmazonPay.CookieInfo"),
+                CookieType = CookieType.Required
+            };
+
+            return new List<CookieInfo> { cookieInfo };
+        }
+
         public override void Install()
         {
             _localizationService.ImportPluginResourcesFromXml(this.PluginDescriptor);
@@ -74,9 +102,6 @@ namespace SmartStore.LivePersonChat
             base.Install();
         }
 
-        /// <summary>
-        /// Uninstall plugin
-        /// </summary>
         public override void Uninstall()
         {
             //locales
