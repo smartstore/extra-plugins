@@ -79,7 +79,7 @@ namespace SmartStore.LivePersonChat
         /// Gets CookieInfos for display in CookieManager dialog.
         /// </summary>
         /// <returns>CookieInfo containing plugin name, cookie purpose description & cookie type</returns>
-        public List<CookieInfo> GetCookieInfo()
+        public IEnumerable<CookieInfo> GetCookieInfo()
         {
             var widget = _widgetService.LoadWidgetBySystemName("SmartStore.LivePersonChat");
             if (!widget.IsWidgetActive(_widgetSettings))
