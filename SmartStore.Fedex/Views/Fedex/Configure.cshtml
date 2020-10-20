@@ -14,9 +14,8 @@
 
 @using (Html.BeginForm())
 {    
-	<script type="text/javascript">
-		$(document).ready(function () {
-
+	<script>
+		$(function () {
 			$("#PackingType").change(togglePackingType);
 			togglePackingType();
 		});
