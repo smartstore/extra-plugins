@@ -71,6 +71,7 @@ namespace SmartStore.Fedex.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Configure(FedexShippingModel model)
         {
             if (!ModelState.IsValid)

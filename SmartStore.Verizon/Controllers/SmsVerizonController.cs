@@ -39,6 +39,7 @@ namespace SmartStore.Plugin.Sms.Verizon.Controllers
         }
 
         [HttpPost, FormValueRequired("save")]
+        [ValidateAntiForgeryToken]
         public ActionResult Configure(SmsVerizonModel model)
         {
             if (!ModelState.IsValid)
@@ -56,6 +57,7 @@ namespace SmartStore.Plugin.Sms.Verizon.Controllers
 
         [HttpPost, ActionName("Configure")]
         [FormValueRequired("test-sms")]
+        [ValidateAntiForgeryToken]
         public ActionResult TestSms(SmsVerizonModel model)
         {
             try

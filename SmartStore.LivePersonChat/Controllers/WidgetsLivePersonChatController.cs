@@ -37,6 +37,7 @@ namespace SmartStore.LivePersonChat.Controllers
         [HttpPost]
         [AdminAuthorize]
         [ChildActionOnly]
+        [ValidateAntiForgeryToken]
         public ActionResult Configure(ConfigurationModel model)
         {
             if (!ModelState.IsValid)

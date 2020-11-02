@@ -13,6 +13,8 @@
 	
 @using (Html.BeginForm())
 {    
+	@Html.AntiForgeryToken()
+
     <div class="alert alert-info">
         @Html.Raw(@T("Plugins.Widgets.LivePersonChat.AdminInstruction"))
     </div>

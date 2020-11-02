@@ -82,6 +82,7 @@ namespace SmartStore.USPS.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Configure(USPSModel model)
         {
             if (!ModelState.IsValid)

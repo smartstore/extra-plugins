@@ -29,6 +29,7 @@ namespace SmartStore.CanadaPost.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Configure(CanadaPostModel model)
         {
             if (!ModelState.IsValid)

@@ -42,6 +42,7 @@ namespace SmartStore.AuthorizeNet.Controllers
 
         [HttpPost]
         [AdminAuthorize]
+        [ValidateAntiForgeryToken]
         [ChildActionOnly]
         public ActionResult Configure(ConfigurationModel model)
         {

@@ -86,6 +86,7 @@ namespace SmartStore.MailChimp.Controllers
         }
 
         [HttpPost, FormValueRequired("save"), ActionName("Configure")]
+        [ValidateAntiForgeryToken]
         public ActionResult ConfigurePost(MailChimpSettingsModel model)
         {
             string saveResult = "";
@@ -116,6 +117,7 @@ namespace SmartStore.MailChimp.Controllers
         }
 
         [HttpPost, FormValueRequired("queueall"), ActionName("Configure")]
+        [ValidateAntiForgeryToken]
         public ActionResult QueueAll(FormCollection formCollection)
         {
             _subscriptionEventQueueingService.QueueAll();
@@ -124,6 +126,7 @@ namespace SmartStore.MailChimp.Controllers
         }
 
         [HttpPost, FormValueRequired("sync"), ActionName("Configure")]
+        [ValidateAntiForgeryToken]
         public ActionResult Sync(FormCollection formCollection)
         {
             var model = PrepareModel();

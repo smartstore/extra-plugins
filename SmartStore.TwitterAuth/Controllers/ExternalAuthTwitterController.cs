@@ -52,6 +52,7 @@ namespace SmartStore.TwitterAuth.Controllers
         }
 
         [HttpPost, AdminAuthorize, ChildActionOnly, SaveSetting]
+        [ValidateAntiForgeryToken]
         [Permission(Permissions.Configuration.Authentication.Update)]
         public ActionResult Configure(ConfigurationModel model, TwitterExternalAuthSettings settings)
         {

@@ -105,6 +105,7 @@ namespace SmartStore.UPS.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Configure(UPSModel model)
         {
             if (!ModelState.IsValid)

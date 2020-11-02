@@ -30,6 +30,7 @@ namespace SmartStore.AustraliaPost.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Configure(AustraliaPostModel model)
         {
             if (!ModelState.IsValid)
