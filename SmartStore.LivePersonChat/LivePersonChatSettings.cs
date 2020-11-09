@@ -1,6 +1,6 @@
 ﻿using SmartStore.Core.Configuration;
 
-namespace SmartStore.LivePersonChat	
+namespace SmartStore.LivePersonChat
 {
     public class LivePersonChatSettings : ISettings
     {

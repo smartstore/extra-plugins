@@ -6,7 +6,7 @@ using SmartStore.Web.Framework.Security;
 
 namespace SmartStore.AustraliaPost.Controllers
 {
-	[AdminAuthorize]
+    [AdminAuthorize]
     public class AustraliaPostController : PluginControllerBase
     {
         private readonly AustraliaPostSettings _australiaPostSettings;
@@ -24,19 +24,20 @@ namespace SmartStore.AustraliaPost.Controllers
             model.GatewayUrl = _australiaPostSettings.GatewayUrl;
             model.ShippedFromZipPostalCode = _australiaPostSettings.ShippedFromZipPostalCode;
             model.AdditionalHandlingCharge = _australiaPostSettings.AdditionalHandlingCharge;
-			model.PrimaryStoreCurrencyCode = Services.StoreContext.CurrentStore.PrimaryStoreCurrency.CurrencyCode;
+            model.PrimaryStoreCurrencyCode = Services.StoreContext.CurrentStore.PrimaryStoreCurrency.CurrencyCode;
 
-			return View(model);
+            return View(model);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Configure(AustraliaPostModel model)
         {
             if (!ModelState.IsValid)
             {
                 return Configure();
             }
-            
+
             _australiaPostSettings.GatewayUrl = model.GatewayUrl;
             _australiaPostSettings.ShippedFromZipPostalCode = model.ShippedFromZipPostalCode;
             _australiaPostSettings.AdditionalHandlingCharge = model.AdditionalHandlingCharge;

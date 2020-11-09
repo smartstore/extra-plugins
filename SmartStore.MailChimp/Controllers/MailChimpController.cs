@@ -15,7 +15,7 @@ using SmartStore.Web.Framework.Security;
 namespace SmartStore.MailChimp.Controllers
 {
 
-	[AdminAuthorize]
+    [AdminAuthorize]
     public class MailChimpController : PluginControllerBase
     {
         private readonly IMailChimpApiService _mailChimpApiService;
@@ -25,8 +25,8 @@ namespace SmartStore.MailChimp.Controllers
         private readonly MailChimpSettings _settings;
         private readonly ISubscriptionEventQueueingService _subscriptionEventQueueingService;
 
-        public MailChimpController(ISettingService settingService, IScheduleTaskService scheduleTaskService, 
-            IMailChimpApiService mailChimpApiService, ISubscriptionEventQueueingService subscriptionEventQueueingService, 
+        public MailChimpController(ISettingService settingService, IScheduleTaskService scheduleTaskService,
+            IMailChimpApiService mailChimpApiService, ISubscriptionEventQueueingService subscriptionEventQueueingService,
             ILocalizationService localizationService, MailChimpSettings settings)
         {
             this._settingService = settingService;
@@ -86,6 +86,7 @@ namespace SmartStore.MailChimp.Controllers
         }
 
         [HttpPost, FormValueRequired("save"), ActionName("Configure")]
+        [ValidateAntiForgeryToken]
         public ActionResult ConfigurePost(MailChimpSettingsModel model)
         {
             string saveResult = "";
@@ -112,10 +113,11 @@ namespace SmartStore.MailChimp.Controllers
             //set result text
             model.SaveResult = saveResult;
 
-			return RedirectToConfiguration("SmartStore.MailChimp");
-		}
+            return RedirectToConfiguration("SmartStore.MailChimp");
+        }
 
         [HttpPost, FormValueRequired("queueall"), ActionName("Configure")]
+        [ValidateAntiForgeryToken]
         public ActionResult QueueAll(FormCollection formCollection)
         {
             _subscriptionEventQueueingService.QueueAll();
@@ -124,6 +126,7 @@ namespace SmartStore.MailChimp.Controllers
         }
 
         [HttpPost, FormValueRequired("sync"), ActionName("Configure")]
+        [ValidateAntiForgeryToken]
         public ActionResult Sync(FormCollection formCollection)
         {
             var model = PrepareModel();
@@ -162,7 +165,7 @@ namespace SmartStore.MailChimp.Controllers
                 //set result text
                 model.SyncResult = exc.ToString();
             }
-            
+
             return View("Configure", model);
         }
     }

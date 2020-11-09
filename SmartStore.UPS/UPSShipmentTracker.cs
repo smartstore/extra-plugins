@@ -6,12 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Web.Services.Protocols;
-using SmartStore.UPS.track;
-using SmartStore.Services.Localization;
 using SmartStore.Core.Logging;
+using SmartStore.Services.Localization;
 using SmartStore.Services.Shipping.Tracking;
+using SmartStore.UPS.track;
 
 namespace SmartStore.UPS
 {

@@ -51,7 +51,7 @@ namespace SmartStore.CanadaPost.Domain
         /// <value>The height.</value>
         [DataMember]
         public double Height { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the Quantity.
         /// </summary>

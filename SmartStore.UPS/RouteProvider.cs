@@ -16,12 +16,6 @@ namespace SmartStore.UPS
             .DataTokens["area"] = "SmartStore.UPS";
         }
 
-        public int Priority
-        {
-            get
-            {
-                return 0;
-            }
-        }
+        public int Priority => 0;
     }
 }

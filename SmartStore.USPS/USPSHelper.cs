@@ -1,11 +1,3 @@
-using System;
-using System.Net;
-using System.Text;
-using System.Web.Routing;
-using SmartStore.Core.Domain.Directory;
-using SmartStore.Core.Domain.Payments;
-using SmartStore.Web.Framework.Plugins;
-
 namespace SmartStore.USPS
 {
     /// <summary>

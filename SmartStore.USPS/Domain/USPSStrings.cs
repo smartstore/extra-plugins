@@ -32,17 +32,11 @@ namespace SmartStore.USPS.Domain
         /// <summary>
         /// String array property getter.
         /// </summary>
-        public string[] Elements
-        {
-            get { return _elements; }
-        }
+        public string[] Elements => _elements;
 
         /// <summary>
         /// String array indexer.
         /// </summary>
-        public string this[int index]
-        {
-            get { return _elements[index]; }
-        }
+        public string this[int index] => _elements[index];
     }
 }

@@ -11,9 +11,9 @@ namespace SmartStore.MailChimp.Controllers
         private readonly HttpContextBase _httpContext;
         private readonly INewsLetterSubscriptionService _newsLetterSubscriptionService;
 
-		private const string EMAIL_KEY_NAME = "data[email]";
-		private const string TYPE_KEY_NAME = "type";
-		private const string TYPE_VALUE = "unsubscribe";
+        private const string EMAIL_KEY_NAME = "data[email]";
+        private const string TYPE_KEY_NAME = "type";
+        private const string TYPE_VALUE = "unsubscribe";
 
         public WebHooksController(
             MailChimpSettings settings,
@@ -39,23 +39,23 @@ namespace SmartStore.MailChimp.Controllers
 
             if (IsUnsubscribe())
             {
-				var email = FindEmail();
-				if (email.IsEmail())
-				{
+                var email = FindEmail();
+                if (email.IsEmail())
+                {
                     // TODO: multistore capable.
                     var subscriptions = _newsLetterSubscriptionService.GetAllNewsLetterSubscriptions(email, 0, int.MaxValue, true);
 
                     foreach (var subscription in subscriptions)
-					{
-						// Do not publish unsubscribe event. Or duplicate events will occur.
-						_newsLetterSubscriptionService.DeleteNewsLetterSubscription(subscription.Subscription, false);
-					}
+                    {
+                        // Do not publish unsubscribe event. Or duplicate events will occur.
+                        _newsLetterSubscriptionService.DeleteNewsLetterSubscription(subscription.Subscription, false);
+                    }
 
                     if (subscriptions.Count > 0)
                     {
                         return Content("OK");
                     }
-				}
+                }
             }
 
             return Content("Invalid Request.");
@@ -67,7 +67,7 @@ namespace SmartStore.MailChimp.Controllers
         /// <returns></returns>
         private string FindEmail()
         {
-			return _httpContext.Request.Form[EMAIL_KEY_NAME];
+            return _httpContext.Request.Form[EMAIL_KEY_NAME];
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace SmartStore.MailChimp.Controllers
         /// </returns>
         private bool IsUnsubscribe()
         {
-			return string.Equals(_httpContext.Request.Form[TYPE_KEY_NAME], TYPE_VALUE, StringComparison.InvariantCultureIgnoreCase);
+            return string.Equals(_httpContext.Request.Form[TYPE_KEY_NAME], TYPE_VALUE, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

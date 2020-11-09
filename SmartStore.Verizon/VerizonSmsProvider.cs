@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web.Routing;
 using SmartStore.Core.Domain.Messages;
-using SmartStore.Core.Email;
 using SmartStore.Core.Logging;
 using SmartStore.Core.Plugins;
 using SmartStore.Services;
@@ -9,28 +8,28 @@ using SmartStore.Services.Messages;
 
 namespace SmartStore.Verizon
 {
-	/// <summary>
-	/// Represents the Verizon SMS provider
-	/// </summary>
-	public class VerizonSmsProvider : BasePlugin, IConfigurable 
+    /// <summary>
+    /// Represents the Verizon SMS provider
+    /// </summary>
+    public class VerizonSmsProvider : BasePlugin, IConfigurable
     {
         private readonly VerizonSettings _verizonSettings;
         private readonly IQueuedEmailService _queuedEmailService;
         private readonly IEmailAccountService _emailAccountService;
         private readonly ILogger _logger;
-		private readonly ICommonServices _services;
+        private readonly ICommonServices _services;
 
-		public VerizonSmsProvider(VerizonSettings verizonSettings,
-            IQueuedEmailService queuedEmailService, 
-			IEmailAccountService emailAccountService,
+        public VerizonSmsProvider(VerizonSettings verizonSettings,
+            IQueuedEmailService queuedEmailService,
+            IEmailAccountService emailAccountService,
             ILogger logger,
-			ICommonServices services)
+            ICommonServices services)
         {
             _verizonSettings = verizonSettings;
             _queuedEmailService = queuedEmailService;
             _emailAccountService = emailAccountService;
             _logger = logger;
-			_services = services;
+            _services = services;
         }
 
         /// <summary>
@@ -43,7 +42,7 @@ namespace SmartStore.Verizon
             try
             {
                 var emailAccount = _emailAccountService.GetDefaultEmailAccount();
-				if (emailAccount == null)
+                if (emailAccount == null)
                     throw new Exception(_services.Localization.GetResource("Common.Error.NoEmailAccount"));
 
                 var queuedEmail = new QueuedEmail
@@ -51,7 +50,7 @@ namespace SmartStore.Verizon
                     Priority = 5,
                     From = emailAccount.ToEmailAddress(),
                     To = _verizonSettings.Email,
-					Subject = _services.StoreContext.CurrentStore.Name,
+                    Subject = _services.StoreContext.CurrentStore.Name,
                     Body = text,
                     CreatedOnUtc = DateTime.UtcNow,
                     EmailAccountId = emailAccount.Id
@@ -78,7 +77,7 @@ namespace SmartStore.Verizon
         {
             actionName = "Configure";
             controllerName = "SmsVerizon";
-			routeValues = new RouteValueDictionary() { { "area", "SmartStore.Verizon" } };
+            routeValues = new RouteValueDictionary() { { "area", "SmartStore.Verizon" } };
         }
 
         /// <summary>
@@ -91,9 +90,9 @@ namespace SmartStore.Verizon
                 Email = "yournumber@vtext.com",
             };
 
-			_services.Settings.SaveSetting(settings);
+            _services.Settings.SaveSetting(settings);
 
-			_services.Localization.ImportPluginResourcesFromXml(this.PluginDescriptor);
+            _services.Localization.ImportPluginResourcesFromXml(this.PluginDescriptor);
 
             base.Install();
         }
@@ -103,9 +102,9 @@ namespace SmartStore.Verizon
         /// </summary>
         public override void Uninstall()
         {
-			_services.Settings.DeleteSetting<VerizonSettings>();
+            _services.Settings.DeleteSetting<VerizonSettings>();
 
-			_services.Localization.DeleteLocaleStringResources(PluginDescriptor.ResourceRootKey);
+            _services.Localization.DeleteLocaleStringResources(PluginDescriptor.ResourceRootKey);
 
             base.Uninstall();
         }

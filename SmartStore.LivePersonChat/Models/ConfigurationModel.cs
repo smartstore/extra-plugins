@@ -1,7 +1,6 @@
-﻿﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using SmartStore.Web.Framework;
-﻿using SmartStore.Web.Framework.Modelling;
+using SmartStore.Web.Framework.Modelling;
 
 namespace SmartStore.LivePersonChat.Models
 {

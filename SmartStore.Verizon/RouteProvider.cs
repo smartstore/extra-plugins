@@ -8,19 +8,13 @@ namespace SmartStore.Verizon
     {
         public void RegisterRoutes(RouteCollection routes)
         {
-			routes.MapRoute("SmartStore.Verizon",
-				 "Plugins/SmartStore.Verizon/{action}",
+            routes.MapRoute("SmartStore.Verizon",
+                 "Plugins/SmartStore.Verizon/{action}",
                  new { controller = "SmsVerizon", action = "Configure" },
                  new[] { "SmartStore.Verizon.Controllers" }
             )
-			.DataTokens["area"] = "SmartStore.Verizon";
+            .DataTokens["area"] = "SmartStore.Verizon";
         }
-        public int Priority
-        {
-            get
-            {
-                return 0;
-            }
-        }
+        public int Priority => 0;
     }
 }

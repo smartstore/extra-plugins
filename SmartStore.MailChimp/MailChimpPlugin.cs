@@ -1,16 +1,14 @@
 ﻿using System.Web.Routing;
 using SmartStore.Core.Plugins;
 using SmartStore.MailChimp.Services;
-using SmartStore.Services.Common;
-using SmartStore.Services.Localization;
 
 namespace SmartStore.MailChimp
 {
-	public class MailChimpPlugin : BasePlugin, IConfigurable
+    public class MailChimpPlugin : BasePlugin, IConfigurable
     {
         private readonly MailChimpInstallationService _mailChimpInstallationService;
         private readonly MailChimpSettings _mailChimpSettings;
-        
+
         public MailChimpPlugin(MailChimpInstallationService mailChimpInstallationService, MailChimpSettings mailChimpSettings)
         {
             this._mailChimpInstallationService = mailChimpInstallationService;
@@ -54,7 +52,7 @@ namespace SmartStore.MailChimp
         {
             actionName = "Configure";
             controllerName = "MailChimp";
-			routeValues = new RouteValueDictionary { { "area", "SmartStore.MailChimp" } };
+            routeValues = new RouteValueDictionary { { "area", "SmartStore.MailChimp" } };
         }
     }
 }

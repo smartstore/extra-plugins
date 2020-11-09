@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using SmartStore.Web.Framework;
 
 namespace SmartStore.Fedex.Models
@@ -20,7 +20,7 @@ namespace SmartStore.Fedex.Models
         public string Key { get; set; }
 
         [SmartResourceDisplayName("Plugins.Shipping.Fedex.Fields.Password")]
-		[DataType(DataType.Password)]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [SmartResourceDisplayName("Plugins.Shipping.Fedex.Fields.AccountNumber")]
@@ -72,6 +72,6 @@ namespace SmartStore.Fedex.Models
         [SmartResourceDisplayName("Plugins.Shipping.Fedex.Fields.DropoffType")]
         public SelectList AvailableDropOffTypes { get; set; }
 
-		public string PrimaryStoreCurrencyCode { get; set; }
-	}
+        public string PrimaryStoreCurrencyCode { get; set; }
+    }
 }

@@ -16,10 +16,10 @@ using SmartStore.Services.Shipping.Tracking;
 
 namespace SmartStore.AustraliaPost
 {
-	/// <summary>
-	/// Australia post computation method
-	/// </summary>
-	public class AustraliaPostComputationMethod : BasePlugin, IShippingRateComputationMethod, IConfigurable
+    /// <summary>
+    /// Australia post computation method
+    /// </summary>
+    public class AustraliaPostComputationMethod : BasePlugin, IShippingRateComputationMethod, IConfigurable
     {
         #region Constants
 
@@ -52,30 +52,18 @@ namespace SmartStore.AustraliaPost
             this._settingService = settingService;
             this._australiaPostSettings = australiaPostSettings;
 
-			T = NullLocalizer.Instance;
-		}
-
-		public Localizer T { get; set; }
-
-		#endregion
-
-		#region Utilities
-
-		private MeasureWeight GatewayMeasureWeight
-        {
-            get
-            {
-                return this._measureService.GetMeasureWeightBySystemKeyword("g");
-            }
+            T = NullLocalizer.Instance;
         }
 
-        private MeasureDimension GatewayMeasureDimension
-        {
-            get
-            {
-                return this._measureService.GetMeasureDimensionBySystemKeyword("mm");
-            }
-        }
+        public Localizer T { get; set; }
+
+        #endregion
+
+        #region Utilities
+
+        private MeasureWeight GatewayMeasureWeight => this._measureService.GetMeasureWeightBySystemKeyword("g");
+
+        private MeasureDimension GatewayMeasureDimension => this._measureService.GetMeasureDimensionBySystemKeyword("mm");
 
         private string GetGatewayUrl()
         {
@@ -176,7 +164,7 @@ namespace SmartStore.AustraliaPost
 
             return shippingOption;
         }
-        
+
         private string GetServiceNameByType(string type)
         {
             if (String.IsNullOrEmpty(type))
@@ -239,7 +227,7 @@ namespace SmartStore.AustraliaPost
                 return response;
             }
 
-			string countryTwoLetterIsoCode = null;
+            string countryTwoLetterIsoCode = null;
             string zipPostalCodeFrom = _australiaPostSettings.ShippedFromZipPostalCode;
             string zipPostalCodeTo = getShippingOptionRequest.ShippingAddress.ZipPostalCode;
             int weight = GetWeight(getShippingOptionRequest);
@@ -247,10 +235,10 @@ namespace SmartStore.AustraliaPost
             int width = GetWidth(getShippingOptionRequest);
             int height = GetHeight(getShippingOptionRequest);
 
-			if (getShippingOptionRequest.ShippingAddress != null)
-			{
-				countryTwoLetterIsoCode = getShippingOptionRequest.ShippingAddress.Country.TwoLetterIsoCode;
-			}
+            if (getShippingOptionRequest.ShippingAddress != null)
+            {
+                countryTwoLetterIsoCode = getShippingOptionRequest.ShippingAddress.Country.TwoLetterIsoCode;
+            }
 
             //estimate packaging
             int totalPackages = 1;
@@ -298,25 +286,25 @@ namespace SmartStore.AustraliaPost
 
             try
             {
-				if (countryTwoLetterIsoCode.HasValue())
-				{
-					if (countryTwoLetterIsoCode.IsCaseInsensitiveEqual("AU"))
-					{
-						//domestic services
-						response.ShippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, countryTwoLetterIsoCode, "Standard", weight, length, width, height, totalPackages));
-						response.ShippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, countryTwoLetterIsoCode, "Express", weight, length, width, height, totalPackages));
-						response.ShippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, countryTwoLetterIsoCode, "EXP_PLT", weight, length, width, height, totalPackages));
-					}
-					else
-					{
-						//international services
-						response.ShippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, countryTwoLetterIsoCode, "Air", weight, length, width, height, totalPackages));
-						response.ShippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, countryTwoLetterIsoCode, "Sea", weight, length, width, height, totalPackages));
-						response.ShippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, countryTwoLetterIsoCode, "ECI_D", weight, length, width, height, totalPackages));
-						response.ShippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, countryTwoLetterIsoCode, "ECI_M", weight, length, width, height, totalPackages));
-						response.ShippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, countryTwoLetterIsoCode, "EPI", weight, length, width, height, totalPackages));
-					}
-				}
+                if (countryTwoLetterIsoCode.HasValue())
+                {
+                    if (countryTwoLetterIsoCode.IsCaseInsensitiveEqual("AU"))
+                    {
+                        //domestic services
+                        response.ShippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, countryTwoLetterIsoCode, "Standard", weight, length, width, height, totalPackages));
+                        response.ShippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, countryTwoLetterIsoCode, "Express", weight, length, width, height, totalPackages));
+                        response.ShippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, countryTwoLetterIsoCode, "EXP_PLT", weight, length, width, height, totalPackages));
+                    }
+                    else
+                    {
+                        //international services
+                        response.ShippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, countryTwoLetterIsoCode, "Air", weight, length, width, height, totalPackages));
+                        response.ShippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, countryTwoLetterIsoCode, "Sea", weight, length, width, height, totalPackages));
+                        response.ShippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, countryTwoLetterIsoCode, "ECI_D", weight, length, width, height, totalPackages));
+                        response.ShippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, countryTwoLetterIsoCode, "ECI_M", weight, length, width, height, totalPackages));
+                        response.ShippingOptions.Add(RequestShippingOption(zipPostalCodeFrom, zipPostalCodeTo, countryTwoLetterIsoCode, "EPI", weight, length, width, height, totalPackages));
+                    }
+                }
 
                 foreach (var shippingOption in response.ShippingOptions)
                 {
@@ -350,9 +338,9 @@ namespace SmartStore.AustraliaPost
         {
             actionName = "Configure";
             controllerName = "AustraliaPost";
-			routeValues = new RouteValueDictionary() { { "area", "SmartStore.AustraliaPost" } };
+            routeValues = new RouteValueDictionary() { { "area", "SmartStore.AustraliaPost" } };
         }
-        
+
         /// <summary>
         /// Install plugin
         /// </summary>
@@ -372,7 +360,7 @@ namespace SmartStore.AustraliaPost
             this.AddOrUpdatePluginLocaleResource("Plugins.Shipping.AustraliaPost.Fields.AdditionalHandlingCharge.Hint", "Enter additional handling fee to charge your customers.");
             this.AddOrUpdatePluginLocaleResource("Plugins.Shipping.AustraliaPost.Fields.ShippedFromZipPostalCode", "Shipped from zip");
             this.AddOrUpdatePluginLocaleResource("Plugins.Shipping.AustraliaPost.Fields.ShippedFromZipPostalCode.Hint", "Specify origin zip code.");
-            
+
             base.Install();
         }
 
@@ -385,7 +373,7 @@ namespace SmartStore.AustraliaPost
             this.DeletePluginLocaleResource("Plugins.Shipping.AustraliaPost.Fields.AdditionalHandlingCharge.Hint");
             this.DeletePluginLocaleResource("Plugins.Shipping.AustraliaPost.Fields.ShippedFromZipPostalCode");
             this.DeletePluginLocaleResource("Plugins.Shipping.AustraliaPost.Fields.ShippedFromZipPostalCode.Hint");
-            
+
             base.Uninstall();
         }
         #endregion
@@ -395,26 +383,14 @@ namespace SmartStore.AustraliaPost
         /// <summary>
         /// Gets a shipping rate computation method type
         /// </summary>
-        public ShippingRateComputationMethodType ShippingRateComputationMethodType
-        {
-            get
-            {
-                return ShippingRateComputationMethodType.Realtime;
-            }
-        }
+        public ShippingRateComputationMethodType ShippingRateComputationMethodType => ShippingRateComputationMethodType.Realtime;
 
         /// <summary>
         /// Gets a shipment tracker
         /// </summary>
-        public IShipmentTracker ShipmentTracker 
-        { 
-            get { return null; }
-        }
+        public IShipmentTracker ShipmentTracker => null;
 
-		public bool IsActive
-		{
-			get { return true; }
-		}
+        public bool IsActive => true;
 
         #endregion
     }

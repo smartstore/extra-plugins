@@ -11,7 +11,7 @@ namespace SmartStore.CanadaPost.Domain
         private Profile m_profile;
         private CanadaPostLanguageEnum m_language;
         #endregion
-        
+
         #region Ctor
         /// <summary>
         /// Initializes a new instance of the <see cref="eParcelBuilder"/> class.

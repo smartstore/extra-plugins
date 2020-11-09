@@ -8,6 +8,7 @@
 
 @using (Html.BeginForm())
 {
+	@Html.AntiForgeryToken()
 
 	<div class="plugin-actions">
 		<button id="SaveConfigButton" type="submit" name="save" class="btn btn-warning" value="save">

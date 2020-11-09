@@ -22,14 +22,14 @@ namespace SmartStore.MailChimp.Services
         /// Handles the event.
         /// </summary>
         /// <param name="eventMessage">The event message.</param>
-        public  void HandleEvent(EmailSubscribedEvent eventMessage)
+        public void HandleEvent(EmailSubscribedEvent eventMessage)
         {
             //is plugin installed?
-			var pluginDescriptor = _pluginFinder.GetPluginDescriptorBySystemName("SmartStore.MailChimp");
+            var pluginDescriptor = _pluginFinder.GetPluginDescriptorBySystemName("SmartStore.MailChimp");
             if (pluginDescriptor == null)
                 return;
-            
-            _service.Insert(new MailChimpEventQueueRecord { Email = eventMessage.Email, IsSubscribe = true, CreatedOnUtc = DateTime.UtcNow});
+
+            _service.Insert(new MailChimpEventQueueRecord { Email = eventMessage.Email, IsSubscribe = true, CreatedOnUtc = DateTime.UtcNow });
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace SmartStore.MailChimp.Services
         public void HandleEvent(EmailUnsubscribedEvent eventMessage)
         {
             //is plugin installed?
-			var pluginDescriptor = _pluginFinder.GetPluginDescriptorBySystemName("SmartStore.MailChimp");
+            var pluginDescriptor = _pluginFinder.GetPluginDescriptorBySystemName("SmartStore.MailChimp");
             if (pluginDescriptor == null)
                 return;
 

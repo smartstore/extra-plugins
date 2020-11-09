@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using SmartStore.MailChimp.Data;
-using SmartStore.Core.Logging;
-using MailChimp.Lists;
 using MailChimp;
 using MailChimp.Helper;
+using MailChimp.Lists;
+using SmartStore.Core.Logging;
+using SmartStore.MailChimp.Data;
 
 namespace SmartStore.MailChimp.Services
 {
@@ -59,7 +59,7 @@ namespace SmartStore.MailChimp.Services
         /// <param name="recordList">The records</param>
         public virtual BatchUnsubscribeResult BatchUnsubscribe(IEnumerable<MailChimpEventQueueRecord> recordList)
         {
-            if (String.IsNullOrEmpty(_mailChimpSettings.DefaultListId)) 
+            if (String.IsNullOrEmpty(_mailChimpSettings.DefaultListId))
                 throw new ArgumentException("MailChimp list is not specified");
 
             MailChimpManager mc = new MailChimpManager(_mailChimpSettings.ApiKey);
@@ -83,7 +83,7 @@ namespace SmartStore.MailChimp.Services
         /// <param name="recordList">The records</param>
         public virtual BatchSubscribeResult BatchSubscribe(IEnumerable<MailChimpEventQueueRecord> recordList)
         {
-            if (String.IsNullOrEmpty(_mailChimpSettings.DefaultListId)) 
+            if (String.IsNullOrEmpty(_mailChimpSettings.DefaultListId))
                 throw new ArgumentException("MailChimp list is not specified");
 
             MailChimpManager mc = new MailChimpManager(_mailChimpSettings.ApiKey);
@@ -92,17 +92,19 @@ namespace SmartStore.MailChimp.Services
 
             foreach (var sub in recordList)
             {
-                emailList.Add(new BatchEmailParameter() { 
-                    Email = new EmailParameter() { 
+                emailList.Add(new BatchEmailParameter()
+                {
+                    Email = new EmailParameter()
+                    {
                         Email = sub.Email
-                    } 
+                    }
                 });
             }
 
             BatchSubscribeResult listSubscribeOutput = mc.BatchSubscribe(_mailChimpSettings.DefaultListId, emailList, false, true);
             return listSubscribeOutput;
         }
-        
+
         public virtual SyncResult Synchronize()
         {
             var result = new SyncResult();
@@ -122,7 +124,7 @@ namespace SmartStore.MailChimp.Services
             }
             var subscribeRecords = allRecordsUnique.Where(x => x.IsSubscribe).ToList();
             var unsubscribeRecords = allRecordsUnique.Where(x => !x.IsSubscribe).ToList();
-            
+
             //subscribe
             if (subscribeRecords.Count > 0)
             {

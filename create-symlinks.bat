@@ -3,7 +3,7 @@
 
 @echo off
 
-set linkedplugins=SmartStore.AustraliaPost, SmartStore.AuthorizeNet, SmartStore.CanadaPost, SmartStore.DiscountRules.PurchasedProducts, SmartStore.Fedex, SmartStore.Glimpse, SmartStore.LivePersonChat, SmartStore.MailChimp, SmartStore.TwitterAuth, SmartStore.UPS, SmartStore.USPS, SmartStore.Verizon
+set linkedplugins=SmartStore.AustraliaPost, SmartStore.AuthorizeNet, SmartStore.CanadaPost, SmartStore.DiscountRules.PurchasedProducts, SmartStore.Fedex, SmartStore.LivePersonChat, SmartStore.MailChimp, SmartStore.TwitterAuth, SmartStore.UPS, SmartStore.USPS, SmartStore.Verizon
 
 set linksrc=%CD%\..\SmartStoreNET\src\Plugins
 set linktarget=%CD%

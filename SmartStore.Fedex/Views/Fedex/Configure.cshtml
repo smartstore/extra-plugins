@@ -14,9 +14,11 @@
 
 @using (Html.BeginForm())
 {    
-	<script type="text/javascript">
-		$(document).ready(function () {
 
+    @Html.AntiForgeryToken()
+
+	<script>
+		$(function () {
 			$("#PackingType").change(togglePackingType);
 			togglePackingType();
 		});
