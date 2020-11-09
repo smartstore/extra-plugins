@@ -1,7 +1,7 @@
 ﻿FriendlyName: Australia Post
 SystemName: SmartStore.AustraliaPost
 Group: Shipping
-Version: 4.0.1
-MinAppVersion: 4.0.1
+Version: 4.1.0
+MinAppVersion: 4.1.0
 DisplayOrder: 1
 FileName: SmartStore.AustraliaPost.dll
