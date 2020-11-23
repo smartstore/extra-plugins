@@ -1,6 +1,6 @@
-## SmartStore.NET Extra Plugins Collection
+## Smartstore Extra Plugins Collection
 
-This repository contains additional plugins and providers, which are not part of the [SmartStore.NET](https://github.com/smartstoreag/SmartStoreNET) core distribution:
+This repository contains additional plugins and providers, which are not part of the [Smartstore](https://github.com/smartstore/SmartStoreNET) core distribution:
 
 * __Australia Post__ shipping provider
 * __Authorize.Net__ payment provider
@@ -16,4 +16,4 @@ This repository contains additional plugins and providers, which are not part of
 
 ## License
 
-SmartStore.NET and all its plugins are released under the [GPLv3 license](http://www.gnu.org/licenses/gpl-3.0.txt).
+Smartstore and all its plugins are released under the [GPLv3 license](http://www.gnu.org/licenses/gpl-3.0.txt).
