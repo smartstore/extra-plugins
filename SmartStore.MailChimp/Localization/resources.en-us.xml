@@ -26,7 +26,7 @@
         </li>
         <li>
           Enter your WebHooks-Key to get informed about the unsubscribe event from MAilChimp. Further information about WebHooks can be found here<br />
-          <a href="http://apidocs.mailchimp.com/webhooks/" target="_blank">http://apidocs.mailchimp.com/webhooks/</a>
+          <a href="https://mailchimp.com/developer/transactional/guides/track-respond-activity-webhooks/#create-a-new-webhook" target="_blank">https://mailchimp.com/developer/transactional/guides/track-respond-activity-webhooks/#create-a-new-webhook</a>
         </li>
       </ol>
       ]]>
