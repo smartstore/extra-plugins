@@ -595,7 +595,7 @@ namespace SmartStore.UPS
             //settings
             var settings = new UPSSettings
             {
-                Url = "https://www.ups.com/ups.app/xml/Rate",
+                Url = "https://onlinetools.ups.com/ups.app/xml/Rate",
                 AccessKey = "AccessKey1",
                 Username = "Username1",
                 Password = "Password",
