@@ -1,8 +1,8 @@
 ﻿FriendlyName: Verizon SMS Provider
 SystemName: SmartStore.Verizon
 Group: Mobile
-Version: 4.1.1
-MinAppVersion: 4.1.1
+Version: 4.2.0
+MinAppVersion: 4.2.0
 DisplayOrder: 1
 FileName: SmartStore.Verizon.dll
 ResourceRootKey: Plugins.Sms.Verizon
